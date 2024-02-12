@@ -1,0 +1,15 @@
+{
+    "cSpell.words": ["gssp", "webp", "kakao"],
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "search.exclude": {
+        "**/.pnp.*": true,
+        "**/.next": true
+    },
+    "eslint.nodePath": "node_modules/eslint", // pnpm의 node_modules 경로로 변경
+    "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+    "typescript.tsdk": "node_modules/typescript/lib", // pnpm의 node_modules 경로로 변경
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "prettier.prettierPath": "node_modules/prettier/index.js", // pnpm의 node_modules 경로로 변경
+    "editor.snippets.codeActions.enabled": true
+}
