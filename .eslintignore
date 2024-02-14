@@ -9,4 +9,5 @@ mock
 node_modules
 coverage
 next.config.js
+next-i18next.config.js
 types
