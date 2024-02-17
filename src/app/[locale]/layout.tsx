@@ -5,8 +5,8 @@ interface LocaleLayoutProps {
     params: { locale: string };
 }
 
-const LocaleLayout: FC<LocaleLayoutProps> = ({ children, params: { locale } }) => (
-    <html lang={locale}>
+const LocaleLayout: FC<LocaleLayoutProps> = ({ children, params: { locale = 'kr' } }) => (
+    <html lang="kr">
         <body>{children}</body>
     </html>
 );
