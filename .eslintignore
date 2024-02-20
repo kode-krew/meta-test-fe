@@ -13,3 +13,5 @@ next-i18next.config.js
 tailwind.config.js
 types
 postcss.config.js
+jest.config.mjs
+jest.setup.js
