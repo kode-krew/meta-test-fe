@@ -43,6 +43,7 @@
         "react-hooks/exhaustive-deps": ["error"],
         "implicit-arrow-linebreak": "off",
         "import/extensions": "off",
+        "react/button-has-type": "off",
         "import/order": [
             "error",
             {
