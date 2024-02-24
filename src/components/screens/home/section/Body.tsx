@@ -1,0 +1,27 @@
+import { FC } from 'react';
+import Image from 'next/image';
+import MetaMainImage from 'public/home/meta-test-main.png';
+import MainPageDescription from '../components/HomePageDescription';
+import MainPageEbsImage from '../components/HomePageEbsImage';
+import MainPageTitleBox from '../components/MainPageTitleBox';
+
+interface BodyProps {}
+
+const Body: FC<BodyProps> = () => (
+    <section className="flex flex-col gap-14">
+        <div className="w-full">
+            <div className="relative w-screen">
+                <Image src={MetaMainImage} loading="eager" alt="메타 테스트 이미지" />
+                <div className="absolute bottom-5 w-screen sm:bottom-10 md:bottom-20">
+                    <MainPageTitleBox />
+                </div>
+            </div>
+        </div>
+        <div className="w-full">
+            <MainPageDescription />
+            <MainPageEbsImage />
+        </div>
+    </section>
+);
+
+export default Body;

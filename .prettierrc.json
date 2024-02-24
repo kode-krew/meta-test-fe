@@ -9,6 +9,7 @@
     "trailingComma": "all",
     "proseWrap": "never",
     "endOfLine": "lf",
+    "plugins": ["prettier-plugin-tailwindcss"],
     "overrides": [
         {
             "files": ".prettierrc",
