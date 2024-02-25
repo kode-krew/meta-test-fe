@@ -3,12 +3,12 @@ import Image from 'next/image';
 import MetaMainImage from 'public/home/meta-test-main.png';
 import MainPageDescription from '../components/HomePageDescription';
 import MainPageEbsImage from '../components/HomePageEbsImage';
-import MainPageTitleBox from '../components/MainPageTitleBox';
+import MainPageTitleBox from '../components/HomePageTitleBox';
 
-interface BodyProps {}
+interface HomeBodyProps {}
 
-const Body: FC<BodyProps> = () => (
-    <section className="flex flex-col gap-14">
+const HomeBody: FC<HomeBodyProps> = () => (
+    <footer className="flex flex-col gap-14">
         <div className="w-full">
             <div className="relative w-screen">
                 <Image src={MetaMainImage} loading="eager" alt="메타 테스트 이미지" />
@@ -21,7 +21,7 @@ const Body: FC<BodyProps> = () => (
             <MainPageDescription />
             <MainPageEbsImage />
         </div>
-    </section>
+    </footer>
 );
 
-export default Body;
+export default HomeBody;

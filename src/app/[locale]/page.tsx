@@ -1,6 +1,8 @@
 import Button from '@src/components/common/Button';
-import Body from '@src/components/screens/home/section/Body';
-import Header from '@src/components/screens/home/section/Header';
+import HomeFooterButton from '@src/components/screens/home/components/HomeFooterButton';
+import HomeBody from '@src/components/screens/home/section/HomeBody';
+import HomeFooter from '@src/components/screens/home/section/HomeFooter';
+import HomeHeader from '@src/components/screens/home/section/HomeHeader';
 import { useTranslations } from 'next-intl';
 
 const Index = () => {
@@ -8,8 +10,10 @@ const Index = () => {
 
     return (
         <div className="w-screen">
-            <Header />
-            <Body />
+            <HomeHeader />
+            <HomeBody />
+            <HomeFooter />
+            <HomeFooterButton />
         </div>
     );
 };
