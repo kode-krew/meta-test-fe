@@ -12,7 +12,7 @@ const HomePageDescription: FC<HomePageDescriptionProps> = () => (
                 <p>
                     <Link
                         className="italic"
-                        href="https://www.youtube.com"
+                        href="https://www.youtube.com/watch?v=auGGn_3gm2w"
                         target="_blank"
                     >{`EBS 학교란 무엇인가 8부 '0.1% 의 비밀'`}</Link>
                     에서

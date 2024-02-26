@@ -19,7 +19,7 @@ const Button = ({
     size = 'base',
     classes,
     onClick,
-    disabled,
+    disabled = false,
     children,
     variant,
 }: IButtonProps) => {
