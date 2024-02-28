@@ -7,9 +7,11 @@ interface HomeHeaderProps {
 
 const HomeHeader: FC<HomeHeaderProps> = ({ onClickLoginButton }) => (
     <header className="m-5 flex flex-row-reverse">
-        <Button onClick={onClickLoginButton} variant="secondary">
-            로그인 / 회원가입
-        </Button>
+        <div>
+            <Button onClick={onClickLoginButton} variant="secondary">
+                로그인 / 회원가입
+            </Button>
+        </div>
     </header>
 );
 

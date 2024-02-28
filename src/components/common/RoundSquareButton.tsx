@@ -38,7 +38,7 @@ const RoundSquareButton = ({
     return (
         <button
             type={type}
-            className={`font h-max w-max
+            className={`font h-max w-full
             cursor-pointer rounded-3xl border-none px-4 py-4 text-${size} ${variantClasses} ${classes}`}
             onClick={onClick}
             disabled={disabled}
