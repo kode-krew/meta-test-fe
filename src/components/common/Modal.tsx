@@ -18,9 +18,10 @@ const Modal: FC<PropsWithChildren<ModalProps>> = ({ children, onClose }) => (
     >
         <div
             className="
+        w-3/6
         rounded-lg
         bg-white
-        p-8" // 모달 창을 스타일링합니다.
+        p-0" // 모달 창을 스타일링합니다.
             onClick={(e) => e.stopPropagation()} // 모달 창을 클릭했을 때는 모달이 닫히지 않도록 합니다.
         >
             {children}
