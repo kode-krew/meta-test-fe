@@ -12,7 +12,8 @@
         "preinstall": "npx only-allow pnpm",
         "prepare": "husky install",
         "test": "jest",
-        "test:watch": "jest-all"
+        "test:watch": "jest-all",
+        "test-codecov": "jest --coverage && codecov"
     },
     "dependencies": {
         "axios": "^1.6.7",
@@ -35,6 +36,7 @@
         "@typescript-eslint/eslint-plugin": "^6.13.2",
         "@typescript-eslint/parser": "^6.13.2",
         "autoprefixer": "^10.4.17",
+        "codecov": "^3.8.3",
         "eslint": "^8.55.0",
         "eslint-config-airbnb": "^19.0.4",
         "eslint-config-airbnb-typescript": "^17.1.0",
