@@ -4,11 +4,12 @@ import SelectBox from '@src/components/common/SelectBox';
 
 interface HomeQuizSelectScreenProps {
     onClickButton: MouseEventHandler<HTMLButtonElement>;
+    testId: string;
 }
 
 const options = ['10개 - 초급', '20개 - 중급', '30개 - 고급'];
 
-const HomeQuizSelectScreen: FC<HomeQuizSelectScreenProps> = ({ onClickButton }) => {
+const HomeQuizSelectScreen: FC<HomeQuizSelectScreenProps> = ({ onClickButton, testId }) => {
     const [selectedOption, setSelectedOption] = useState('');
 
     const onOptionChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -24,6 +25,7 @@ const HomeQuizSelectScreen: FC<HomeQuizSelectScreenProps> = ({ onClickButton }) 
         pb-5 pl-3 pr-3
         pt-5
         "
+            data-testid={testId}
         >
             <p className="text-2xl font-bold">테스트 단어 수 선택</p>
             <SelectBox

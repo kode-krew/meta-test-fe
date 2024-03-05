@@ -35,7 +35,7 @@ const Index = () => {
             <HomeFooterButton onClick={handleQuizModal} />
             {modalProps.isOpenQuizModal && (
                 <Modal onClose={handleQuizModal}>
-                    <HomeQuizSelectScreen onClickButton={handleQuizModal} />
+                    <HomeQuizSelectScreen testId="quiz-modal" onClickButton={handleQuizModal} />
                 </Modal>
             )}
             {modalProps.isOpenLoginModal && (
