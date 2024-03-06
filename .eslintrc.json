@@ -26,6 +26,12 @@
         "jsx-a11y/interactive-supports-focus": "off",
         "jsx-a11y/no-static-element-interactions": "off",
         "no-alert": "off",
+        "jsx-a11y/label-has-associated-control": [
+            2,
+            {
+                "labelAttributes": ["htmlFor"]
+            }
+        ],
         "no-param-reassign": [
             "error",
             {
