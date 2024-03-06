@@ -3,6 +3,7 @@ import Button from '@src/components/common/Button';
 import CommonInput from '@src/components/common/CommonInput';
 import Modal from '@src/components/common/Modal';
 import HomePasswordFindScreen from './HomePasswordFindScreen';
+import HomeSignupScreen from './HomeSignupScreen';
 
 interface HomeBasicLoginSectionProps {}
 interface OpenModalState {
@@ -11,21 +12,26 @@ interface OpenModalState {
 }
 
 const HomeBasicLoginSection: FC<HomeBasicLoginSectionProps> = () => {
-    const [isOpenModal, setIsOpenModal] = useState<OpenModalState>({
+    const [modalState, setModalState] = useState<OpenModalState>({
         isOpenPasswordModal: false,
         isOpenSignupModal: false,
     });
 
     const onClickPasswordFind = () => {
-        setIsOpenModal((prev) => ({ ...prev, isOpenPasswordModal: !prev.isOpenPasswordModal }));
+        setModalState((prev) => ({ ...prev, isOpenPasswordModal: !prev.isOpenPasswordModal }));
     };
 
     const onCloseModal = () => {
-        setIsOpenModal((prev) => ({
-            isOpenSignupModal: !prev.isOpenSignupModal,
-            isOpenPasswordModal: !prev.isOpenPasswordModal,
+        setModalState((prev) => ({
+            isOpenSignupModal: false,
+            isOpenPasswordModal: false,
         }));
     };
+
+    const onClickSignup = () => {
+        setModalState((prev) => ({ ...prev, isOpenSignupModal: !prev.isOpenSignupModal }));
+    };
+
     return (
         <>
             <form className="container mt-4">
@@ -46,7 +52,9 @@ const HomeBasicLoginSection: FC<HomeBasicLoginSectionProps> = () => {
                     />
                 </div>
                 <div className="mt-6 flex flex-col gap-3">
-                    <Button variant="primary-unselect">이메일 회원가입</Button>
+                    <Button variant="primary-unselect" onClick={onClickSignup}>
+                        이메일 회원가입
+                    </Button>
                     <Button variant="primary">로그인</Button>
                     <span
                         className="flex w-full cursor-pointer justify-end text-sm font-medium text-gray-500"
@@ -56,7 +64,12 @@ const HomeBasicLoginSection: FC<HomeBasicLoginSectionProps> = () => {
                     </span>
                 </div>
             </form>
-            {isOpenModal.isOpenPasswordModal && (
+            {modalState.isOpenSignupModal && (
+                <Modal onClose={onCloseModal}>
+                    <HomeSignupScreen />
+                </Modal>
+            )}
+            {modalState.isOpenPasswordModal && (
                 <Modal onClose={onCloseModal}>
                     <HomePasswordFindScreen />
                 </Modal>
