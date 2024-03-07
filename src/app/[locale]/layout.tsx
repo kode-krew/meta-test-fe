@@ -1,7 +1,5 @@
 import { FC } from 'react';
 
-import '../globals.css';
-import HomeBody from '@src/components/screens/home/section/HomeBody';
 import { useTranslations } from 'next-intl';
 
 interface LocaleLayoutProps {
@@ -13,9 +11,9 @@ const LocaleLayout: FC<LocaleLayoutProps> = ({ children, params: { locale } }) =
     const t = useTranslations('Index');
 
     return (
-        <html lang={locale}>
-            <body>{children}</body>
-        </html>
+        <div>
+            <div>{children}</div>
+        </div>
     );
 };
 
