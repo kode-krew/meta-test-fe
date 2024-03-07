@@ -29,7 +29,7 @@ const Button = ({
             variantClasses = 'bg-violet-300 hover:bg-violet-700 text-white';
             break;
         case 'primary-unselect':
-            variantClasses = 'bg-gray-100 hover:bg-gray-500 text-violet-300';
+            variantClasses = 'bg-gray-100 hover:bg-gray-500  text-violet-300';
             break;
         case 'secondary':
             variantClasses = 'bg-gray-700 hover:bg-gray-500 text-white';

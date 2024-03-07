@@ -41,7 +41,6 @@ const Index = () => {
             {modalProps.isOpenLoginModal && (
                 <Modal onClose={handleLoginModal}>
                     <HomeLoginModalScreen />
-                    {/* <HomeQuizSelectScreen onClickButton={handleQuizModal} /> */}
                 </Modal>
             )}
         </div>
