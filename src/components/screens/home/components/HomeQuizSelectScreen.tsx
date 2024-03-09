@@ -1,19 +1,39 @@
 import { ChangeEvent, FC, MouseEventHandler, useState } from 'react';
 import Button from '@src/components/common/Button';
 import SelectBox from '@src/components/common/SelectBox';
+import { useRouter } from 'next/navigation';
 
 interface HomeQuizSelectScreenProps {
     onClickButton: MouseEventHandler<HTMLButtonElement>;
     testId: string;
 }
 
-const options = ['10개 - 초급', '20개 - 중급', '30개 - 고급'];
+const options = [
+    {
+        difficulty: 'easy',
+        text: '10개 - 초급',
+    },
+    {
+        difficulty: 'middle',
+        text: '20개 - 중급',
+    },
+    {
+        difficulty: 'hard',
+        text: '30개 - 고급',
+    },
+];
 
 const HomeQuizSelectScreen: FC<HomeQuizSelectScreenProps> = ({ onClickButton, testId }) => {
+    const router = useRouter();
+    const { push } = router;
     const [selectedOption, setSelectedOption] = useState('');
 
     const onOptionChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setSelectedOption(e.target.value);
+    };
+
+    const onClickQuizButton = () => {
+        push(`/quiz?difficulty=${selectedOption}`);
     };
 
     return (
@@ -37,7 +57,7 @@ const HomeQuizSelectScreen: FC<HomeQuizSelectScreenProps> = ({ onClickButton, te
                 <Button variant="primary-unselect" onClick={onClickButton}>
                     취소
                 </Button>
-                <Button variant="primary" onClick={onClickButton}>
+                <Button variant="primary" onClick={onClickQuizButton}>
                     확인
                 </Button>
             </div>

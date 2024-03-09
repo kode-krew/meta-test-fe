@@ -1,9 +1,12 @@
-import { FC, ChangeEvent } from 'react';
+import { FC, ChangeEvent, MouseEventHandler, ChangeEventHandler } from 'react';
 
 interface SelectBoxProps {
-    options: string[];
+    options: {
+        difficulty: string;
+        text: string;
+    }[];
     selectedOption: string;
-    onOptionChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+    onOptionChange: ChangeEventHandler<HTMLSelectElement>;
 }
 
 const SelectBox: FC<SelectBoxProps> = ({ options, selectedOption, onOptionChange }) => (
@@ -16,8 +19,8 @@ const SelectBox: FC<SelectBoxProps> = ({ options, selectedOption, onOptionChange
         rounded-lg border pl-3 pr-6 text-base placeholder-gray-600 shadow"
     >
         {options.map((option) => (
-            <option key={option} value={option}>
-                {option}
+            <option key={option.difficulty} value={option.difficulty}>
+                {option.text}
             </option>
         ))}
     </select>
