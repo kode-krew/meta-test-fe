@@ -2,12 +2,12 @@ import { FC } from 'react';
 
 import { useTranslations } from 'next-intl';
 
-interface LocaleLayoutProps {
+interface HomePageLayoutProps {
     children: React.ReactNode;
     params: { locale: string };
 }
 
-const LocaleLayout: FC<LocaleLayoutProps> = ({ children, params: { locale } }) => {
+const HomePageLayout: FC<HomePageLayoutProps> = ({ children, params: { locale } }) => {
     const t = useTranslations('Index');
 
     return (
@@ -17,4 +17,4 @@ const LocaleLayout: FC<LocaleLayoutProps> = ({ children, params: { locale } }) =
     );
 };
 
-export default LocaleLayout;
+export default HomePageLayout;
