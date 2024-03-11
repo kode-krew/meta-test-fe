@@ -1,10 +1,6 @@
 import { FC } from 'react';
-import TextInput from '@src/components/common/CommonInput';
 import GoogleIcon from '@src/components/common/Icons/GoogleIcon';
 import KakaoIcon from '@src/components/common/Icons/KakaoIcon';
-import Image from 'next/image';
-import googleLoginImage from 'public/home/login/google_login.png';
-import kakaoLoginImage from 'public/home/login/kakao_login_ko.png';
 import HomeBasicLoginSection from './HomeBasicLoginSection';
 
 interface HomeLoginModalScreenProps {}
