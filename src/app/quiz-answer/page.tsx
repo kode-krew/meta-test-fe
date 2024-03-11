@@ -1,9 +1,6 @@
 'use client';
 
-import QuizBanner from '@src/components/screens/quiz/QuizBanner';
-import QuizSection from '@src/components/screens/quiz/QuizSection';
-
-const QuizPageIndex = () => (
+const QuizAnswerPage = () => (
     <div
         className="
             flex
@@ -13,10 +10,9 @@ const QuizPageIndex = () => (
             justify-center"
     >
         <section className="flex  h-screen w-full max-w-3xl flex-col items-center gap-5 bg-zinc-100 p-5">
-            <QuizBanner />
-            <QuizSection />
+            <div>퀴즈 풀이 화면</div>
         </section>
     </div>
 );
 
-export default QuizPageIndex;
+export default QuizAnswerPage;

@@ -14,7 +14,7 @@ interface ModalProps {
     isOpenLoginModal: boolean;
 }
 
-const Index = () => {
+const HomePage = () => {
     const [modalProps, setModalProps] = useState<ModalProps>({
         isOpenLoginModal: false,
         isOpenQuizModal: false,
@@ -47,4 +47,4 @@ const Index = () => {
     );
 };
 
-export default Index;
+export default HomePage;

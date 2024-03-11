@@ -1,35 +1,32 @@
 import { FC, PropsWithChildren, ReactNode } from 'react';
-import Portal from './Portal';
 
 interface ModalProps {
     children: ReactNode;
-    onClose: () => void; // 모달을 닫는 함수를 prop으로 받습니다.
-    isPortal?: boolean;
+    onClose?: () => void; // 모달을 닫는 함수를 prop으로 받습니다.
+    backGroundColor?: string;
 }
 
-const Modal: FC<PropsWithChildren<ModalProps>> = ({ children, onClose, isPortal }) => {
+const Modal: FC<PropsWithChildren<ModalProps>> = ({
+    children,
+    onClose,
+    backGroundColor = 'bg-black/50',
+}) => {
     const modal = (
         <div
-            className="
+            className={`
+
             fixed
             left-0
             top-0
             z-40
             flex h-screen
             w-screen items-center justify-center
-            bg-black bg-opacity-50"
+           ${backGroundColor}
+            
+            `}
             onClick={onClose}
         >
-            <div
-                className="
-                w-3/6
-                rounded-lg
-                bg-white
-                p-0"
-                onClick={(e) => e.stopPropagation()}
-            >
-                {children}
-            </div>
+            <div onClick={(e) => e.stopPropagation()}>{children}</div>
         </div>
     );
 

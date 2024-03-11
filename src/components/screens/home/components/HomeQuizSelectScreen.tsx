@@ -10,15 +10,15 @@ interface HomeQuizSelectScreenProps {
 
 const options = [
     {
-        difficulty: 'easy',
+        difficulty: 'beginner',
         text: '10개 - 초급',
     },
     {
-        difficulty: 'middle',
+        difficulty: 'intermediate',
         text: '20개 - 중급',
     },
     {
-        difficulty: 'hard',
+        difficulty: 'advanced',
         text: '30개 - 고급',
     },
 ];
@@ -26,7 +26,7 @@ const options = [
 const HomeQuizSelectScreen: FC<HomeQuizSelectScreenProps> = ({ onClickButton, testId }) => {
     const router = useRouter();
     const { push } = router;
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState('beginner');
 
     const onOptionChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setSelectedOption(e.target.value);
@@ -40,9 +40,12 @@ const HomeQuizSelectScreen: FC<HomeQuizSelectScreenProps> = ({ onClickButton, te
         <div
             className="container
         flex
-        w-full flex-col 
+        w-96
+        flex-col
         gap-y-5 
-        pb-5 pl-3 pr-3
+        rounded bg-white pb-5
+        pl-3
+        pr-3
         pt-5
         "
             data-testid={testId}

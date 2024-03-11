@@ -1,21 +1,25 @@
 import { FC } from 'react';
 
-interface QuizCardProps {}
+interface QuizCardProps {
+    words: string;
+}
 
-const QuizCard: FC<QuizCardProps> = () => (
+const QuizCard: FC<QuizCardProps> = ({ words }) => (
     <div
         className="   
+       
         flex
-        h-1/6
-        w-1/2
+        h-full
+        w-full
         items-center
         justify-center
         rounded
-        border-none
+        border
+        border-emerald-400
         bg-teal-100
         "
     >
-        QuizCard
+        <h1>{words}</h1>
     </div>
 );
 

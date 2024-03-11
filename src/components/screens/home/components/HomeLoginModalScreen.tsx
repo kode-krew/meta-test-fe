@@ -10,7 +10,11 @@ import HomeBasicLoginSection from './HomeBasicLoginSection';
 interface HomeLoginModalScreenProps {}
 
 const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = () => (
-    <div className="container rounded-md border border-violet-400 bg-violet-200 px-5 pb-5 pt-7">
+    <div
+        className="
+   w-96
+    rounded-md border border-violet-400 bg-violet-200 px-5 pb-5 pt-7"
+    >
         <p className="text-2xl font-bold">로그인</p>
         <section className="mt-3 flex flex-col gap-3">
             <button
