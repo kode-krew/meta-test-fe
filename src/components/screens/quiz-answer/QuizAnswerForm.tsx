@@ -1,41 +1,60 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import CommonInput from '@src/components/common/CommonInput';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import QuizAnswerSortingButton from './QuizAnswerSortingButton';
+import QuizAnswerSortingButtonSection from './QuizAnswerSortingButtonSection';
 import QuizAnswerSubmitButton from './QuizAnswerSubmitButton';
 
 interface QuizAnswerFormProps {}
 
-const QuizAnswerForm: FC<QuizAnswerFormProps> = () => {
-    const { register } = useForm();
+export interface QuizAnswerFormType {
+    inputValue: string;
+    answers: string[];
+}
+
+export const QuizAnswerForm: FC<QuizAnswerFormProps> = () => {
+    const control = useForm<QuizAnswerFormType>({
+        defaultValues: {
+            inputValue: '',
+            answers: [],
+        },
+    });
+    const { register, handleSubmit, setValue, getValues, resetField } = control;
+
+    const setSortingAnswers = useCallback(
+        (value: string) => {
+            const originalArr = getValues('answers');
+            if (originalArr.includes(value)) {
+                return;
+            }
+            setValue('answers', [...originalArr, value]);
+        },
+        [getValues, setValue],
+    );
+
+    const onValid = useCallback(
+        async ({ inputValue }: QuizAnswerFormType) => {
+            await setSortingAnswers(inputValue);
+            resetField('inputValue');
+        },
+        [resetField, setSortingAnswers],
+    );
 
     return (
-        <form className="flex h-full max-h-screen w-full  flex-col justify-between">
-            <div>
-                <CommonInput placeholder="단어 입력후 엔터를 쳐 주세요." variant="secondary" />
-                <section className="mt-5 flex w-full flex-wrap gap-5">
-                    <QuizAnswerSortingButton word="sssss" />
-                    <QuizAnswerSortingButton word="sssssㄴㅇㄹㄴㅇㄹ" />
-                    <QuizAnswerSortingButton word="sssssㄹㅇㄴㄹ" />
-                    <QuizAnswerSortingButton word="sssssㅇㅇㅇ" />
-                    <QuizAnswerSortingButton word="sssssㅇㄹㅇㄴㄹㅇㄴㄹㅇㄴㄹㅇㄹ" />
-                    <QuizAnswerSortingButton word="sssssㄴㅇㄹㅇㄹ" />
-                    <QuizAnswerSortingButton word="sssㄹㅇㅇㄴㄹㅇㄴㄹss" />
-                    <QuizAnswerSortingButton word="sssss" />
-                    <QuizAnswerSortingButton word="sssssㅇㄹ" />
-                    <QuizAnswerSortingButton word="sssss" />
-                    <QuizAnswerSortingButton word="ssssㅇㄹㅇㄹs" />
-                    <QuizAnswerSortingButton word="sssssㅇㄹㄹ" />
-                    <QuizAnswerSortingButton word="ssssㅇㄴㄹㅇs" />
-                    <QuizAnswerSortingButton word="sssㄹㅇㄴㄹㄴㅇss" />
-                    <QuizAnswerSortingButton word="ㄹㅇㄴㅇㄹㅇㄴㄹㅇㄹ" />
-                    <QuizAnswerSortingButton word="sssss" />
-                    <QuizAnswerSortingButton word="sssssㅇㄴㄹㅇㄹㅇㄴㄹㅇㄴㄹ" />
-                </section>
-            </div>
+        <FormProvider {...control}>
+            <form
+                className="flex h-full max-h-screen w-full  flex-col"
+                onSubmit={handleSubmit(onValid)}
+            >
+                <CommonInput
+                    placeholder="단어 입력후 엔터를 쳐 주세요."
+                    variant="secondary"
+                    {...register('inputValue')}
+                />
+
+                <QuizAnswerSortingButtonSection />
+            </form>
             <QuizAnswerSubmitButton />
-        </form>
+        </FormProvider>
     );
 };
-
-export default QuizAnswerForm;

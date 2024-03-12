@@ -1,8 +1,6 @@
 'use client';
 
-import Button from '@src/components/common/Button';
-import CommonInput from '@src/components/common/CommonInput';
-import QuizAnswerForm from '@src/components/screens/quiz-answer/QuizAnswerForm';
+import { QuizAnswerForm } from '@src/components/screens/quiz-answer/QuizAnswerForm';
 
 const QuizAnswerPage = () => (
     <div
