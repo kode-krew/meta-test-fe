@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import type { QuizAnswerFormType } from './QuizAnswerForm';
-import QuizAnswerSortingButton from './QuizAnswerSortingButton';
+import QuizAnswerSortingButton from '../../common/QuizAnswerSortingButton';
 
 interface QuizAnswerSortingButtonSectionProps {}
 
