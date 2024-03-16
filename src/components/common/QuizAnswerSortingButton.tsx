@@ -1,12 +1,19 @@
 import { FC, MouseEventHandler } from 'react';
 import CloseIcon from '@src/components/common/Icons/CloseIcon';
+import QuizCorrectCircleIcon from './Icons/QuizCorrectCircleIcon';
+import QuizInCorrectCrossIcon from './Icons/QuizInCorrectCrossIcon';
 
 interface QuizAnswerSortingButtonProps {
     word: string;
     onClick?: MouseEventHandler<HTMLDivElement>;
+    isCorrect?: boolean;
 }
 
-const QuizAnswerSortingButton: FC<QuizAnswerSortingButtonProps> = ({ word, onClick }) => (
+const QuizAnswerSortingButton: FC<QuizAnswerSortingButtonProps> = ({
+    word,
+    onClick,
+    isCorrect,
+}) => (
     <div
         className="container relative flex h-12 w-full max-w-max 
         items-center
@@ -18,6 +25,17 @@ const QuizAnswerSortingButton: FC<QuizAnswerSortingButtonProps> = ({ word, onCli
                 <CloseIcon />
             </div>
         )}
+        {isCorrect && (
+            <div className="absolute  opacity-75">
+                <QuizCorrectCircleIcon />
+            </div>
+        )}
+        {!isCorrect && isCorrect !== undefined && (
+            <div className="absolute  opacity-75">
+                <QuizInCorrectCrossIcon />
+            </div>
+        )}
+
         <span>{word}</span>
     </div>
 );
