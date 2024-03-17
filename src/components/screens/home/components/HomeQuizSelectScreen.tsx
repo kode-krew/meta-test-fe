@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, MouseEventHandler, useState } from 'react';
 import Button from '@src/components/common/Button';
-import SelectBox from '@src/components/common/SelectBox';
+import SelectBox, { SelectBoxOptionType } from '@src/components/common/SelectBox';
 import { useRouter } from 'next/navigation';
 
 interface HomeQuizSelectScreenProps {
@@ -8,18 +8,18 @@ interface HomeQuizSelectScreenProps {
     testId: string;
 }
 
-const options = [
+const options: SelectBoxOptionType[] = [
     {
-        difficulty: 'beginner',
-        text: '10개 - 초급',
+        id: 'beginner',
+        label: '10개 - 초급',
     },
     {
-        difficulty: 'intermediate',
-        text: '20개 - 중급',
+        id: 'intermediate',
+        label: '20개 - 중급',
     },
     {
-        difficulty: 'advanced',
-        text: '30개 - 고급',
+        id: 'advanced',
+        label: '30개 - 고급',
     },
 ];
 
