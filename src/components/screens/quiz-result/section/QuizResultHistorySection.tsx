@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import Button from '@src/components/common/Button';
 import QuizResultHistoryGraphCard from '../QuizResultHistoryGraphCard';
+import QuizResultRankingCard from '../QuizResultRankingCard';
 
 interface QuizResultHistorySectionProps {}
 
@@ -13,6 +14,7 @@ const QuizResultHistorySection: FC<QuizResultHistorySectionProps> = () => (
             </div>
         </div>
         <QuizResultHistoryGraphCard />
+        <QuizResultRankingCard />
     </section>
 );
 
