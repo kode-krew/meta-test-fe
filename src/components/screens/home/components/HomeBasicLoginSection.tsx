@@ -39,7 +39,12 @@ const HomeBasicLoginSection: FC<HomeBasicLoginSectionProps> = () => {
                     <label htmlFor="email" className="font-semibold">
                         Email
                     </label>
-                    <CommonInput type="email" id="email" placeholder="이메일을 입력해주세요." />
+                    <CommonInput
+                        type="email"
+                        id="email"
+                        placeholder="이메일을 입력해주세요."
+                        variant="primary"
+                    />
                 </div>
                 <div className="mt-3">
                     <label htmlFor="password" className="font-semibold">
@@ -49,6 +54,7 @@ const HomeBasicLoginSection: FC<HomeBasicLoginSectionProps> = () => {
                         id="password"
                         type="password"
                         placeholder="비밀번호를 입력해주세요."
+                        variant="primary"
                     />
                 </div>
                 <div className="mt-6 flex flex-col gap-3">

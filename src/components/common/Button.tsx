@@ -2,7 +2,7 @@ import React from 'react';
 
 type ButtonType = 'submit' | 'reset' | 'button';
 type ButtonSize = 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl';
-type ButtonStyle = 'primary' | 'secondary' | 'primary-unselect';
+type ButtonStyle = 'primary' | 'secondary' | 'primary-unselect' | 'blue';
 
 interface IButtonProps {
     type?: ButtonType;
@@ -33,6 +33,9 @@ const Button = ({
             break;
         case 'secondary':
             variantClasses = 'bg-gray-700 hover:bg-gray-500 text-white disabled:bg-gray-700';
+            break;
+        case 'blue':
+            variantClasses = 'bg-blue-500 hover:bg-blue-300 text-white disabled:bg-blue-300';
             break;
         default:
             break;
