@@ -1,7 +1,6 @@
 import { FC, useCallback } from 'react';
 import CommonInput from '@src/components/common/CommonInput';
 import { FormProvider, useForm } from 'react-hook-form';
-import QuizAnswerSortingButton from './QuizAnswerSortingButton';
 import QuizAnswerSortingButtonSection from './QuizAnswerSortingButtonSection';
 import QuizAnswerSubmitButton from './QuizAnswerSubmitButton';
 
