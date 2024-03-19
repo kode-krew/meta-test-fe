@@ -6,7 +6,7 @@ import QuizResultRankingCard from '../QuizResultRankingCard';
 interface QuizResultHistorySectionProps {}
 
 const QuizResultHistorySection: FC<QuizResultHistorySectionProps> = () => (
-    <section className="mt-3 flex flex-col">
+    <section className="mt-8 flex flex-col">
         <div className="flex justify-between">
             <h1 className="text-2xl font-bold">기록</h1>
             <div>
