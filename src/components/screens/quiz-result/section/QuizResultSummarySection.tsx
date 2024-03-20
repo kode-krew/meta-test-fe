@@ -5,7 +5,7 @@ import QuizResultScoreCard from '../QuizResultScoreCard';
 interface QuizResultSummarySectionProps {}
 
 const QuizResultSummarySection: FC<QuizResultSummarySectionProps> = () => (
-    <section>
+    <section className="flex w-full flex-col items-center justify-center">
         <QuizResultHeaderTitle />
         <QuizResultScoreCard />
     </section>
