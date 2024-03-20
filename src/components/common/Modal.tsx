@@ -14,7 +14,6 @@ const Modal: FC<PropsWithChildren<ModalProps>> = ({
     const modal = (
         <div
             className={`
-
             fixed
             left-0
             top-0
@@ -26,7 +25,15 @@ const Modal: FC<PropsWithChildren<ModalProps>> = ({
             `}
             onClick={onClose}
         >
-            <div onClick={(e) => e.stopPropagation()}>{children}</div>
+            <div
+                className="
+            flex
+            w-full
+            justify-center px-2"
+                onClick={(e) => e.stopPropagation()}
+            >
+                {children}
+            </div>
         </div>
     );
 
