@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import SelectBox, { SelectBoxOptionType } from '@src/components/common/SelectBox';
-import dynamic from 'next/dynamic';
 import QuizResultBarChart from './QuizResultBarChart';
 
 interface QuizResultHistoryGraphCardProps {}

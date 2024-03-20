@@ -7,12 +7,7 @@
 }
 .colSmall {
     width: 35px;
-    /* height: 250px; */
 }
-/* .colLarge {
-    max-width: 670px;
-    overflow-x: scroll;
-} */
 
 .box {
     width: calc(1000px - 35px);
