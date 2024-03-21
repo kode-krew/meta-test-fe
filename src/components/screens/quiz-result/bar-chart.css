@@ -1,0 +1,30 @@
+.chartBox {
+    width: 100%;
+    padding: 20px;
+    border-radius: 20px;
+    background: white;
+    display: flex;
+}
+.colSmall {
+    width: 35px;
+    /* height: 250px; */
+}
+/* .colLarge {
+    max-width: 670px;
+    overflow-x: scroll;
+} */
+
+.box {
+    width: calc(1000px - 35px);
+    height: 300px;
+}
+.colLarge {
+    max-width: 670px;
+    overflow-x: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+}
+
+.colLarge::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
