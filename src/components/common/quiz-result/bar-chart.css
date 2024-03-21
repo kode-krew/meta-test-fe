@@ -1,6 +1,6 @@
 .chartBox {
     width: 100%;
-    padding: 20px;
+    padding: 20px 0;
     border-radius: 20px;
     background: white;
     display: flex;
@@ -10,11 +10,12 @@
 }
 
 .box {
-    width: calc(1000px - 35px);
+    width: 700px;
     height: 300px;
 }
 .colLarge {
-    max-width: 670px;
+    width: 100%;
+    max-width: 768px;
     overflow-x: scroll;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE 10+ */
