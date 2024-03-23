@@ -8,15 +8,12 @@ const QuizAnswerLayout = ({ children }: Props) => (
     <div
         className="
 flex
-h-screen
 w-screen
 items-center
 justify-center"
     >
         <section
             className="flex  
-            h-full
-        h-screen
             w-full
         max-w-3xl
         flex-col
