@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import Button from '@src/components/common/Button';
 import CommonInput from '@src/components/common/CommonInput';
-import Modal from '@src/components/common/Modal';
+import Modal from '@src/components/common/modal/Modal';
 import HomePasswordFindScreen from './HomePasswordFindScreen';
 import HomeSignupScreen from './HomeSignupScreen';
 

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 interface QuizCardProps {
     words: string;
@@ -23,4 +23,4 @@ const QuizCard: FC<QuizCardProps> = ({ words }) => (
     </div>
 );
 
-export default QuizCard;
+export default React.memo(QuizCard);

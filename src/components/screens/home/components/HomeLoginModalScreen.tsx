@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import GoogleIcon from '@src/components/common/Icons/GoogleIcon';
 import KakaoIcon from '@src/components/common/Icons/KakaoIcon';
 import HomeBasicLoginSection from './HomeBasicLoginSection';
@@ -33,4 +33,4 @@ const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = () => (
     </div>
 );
 
-export default HomeLoginModalScreen;
+export default React.memo(HomeLoginModalScreen);

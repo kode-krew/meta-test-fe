@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, MouseEventHandler, useState } from 'react';
+import { ChangeEvent, FC, MouseEvent, MouseEventHandler, useState } from 'react';
 import Button from '@src/components/common/Button';
 import SelectBox, { SelectBoxOptionType } from '@src/components/common/SelectBox';
 import { useRouter } from 'next/navigation';
@@ -32,7 +32,8 @@ const HomeQuizSelectScreen: FC<HomeQuizSelectScreenProps> = ({ onClickButton, te
         setSelectedOption(e.target.value);
     };
 
-    const onClickQuizButton = () => {
+    const onClickQuizButton = (e: MouseEvent<HTMLButtonElement>) => {
+        onClickButton(e);
         push(`/quiz?difficulty=${selectedOption}`);
     };
 

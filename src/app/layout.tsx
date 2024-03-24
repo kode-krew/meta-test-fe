@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import GlobalModal from '@src/components/common/modal/GlobalModal';
 import Toaster from '@src/components/common/toast/Toast';
 import './globals.css';
 
@@ -11,6 +12,7 @@ const LocaleLayout: FC<LocaleLayoutProps> = ({ children }) => (
         <body>
             {children}
             <Toaster />
+            <GlobalModal />
         </body>
     </html>
 );

@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, ReactNode } from 'react';
+import React, { FC, PropsWithChildren, ReactNode } from 'react';
 
 interface ModalProps {
     children: ReactNode;
@@ -40,4 +40,4 @@ const Modal: FC<PropsWithChildren<ModalProps>> = ({
     return modal;
 };
 
-export default Modal;
+export default React.memo(Modal);
