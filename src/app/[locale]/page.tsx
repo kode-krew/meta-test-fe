@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Modal from '@src/components/common/Modal';
+import { ToastService } from '@src/components/common/toast/ToastService';
 import HomeFooterButton from '@src/components/screens/home/components/HomeFooterButton';
 import HomeLoginModalScreen from '@src/components/screens/home/components/HomeLoginModalScreen';
 import HomeQuizSelectScreen from '@src/components/screens/home/components/HomeQuizSelectScreen';
@@ -15,14 +16,18 @@ interface ModalProps {
 }
 
 const HomePage = () => {
+    // TODO 추후 토스트 사용 시 추가.
+    // const toastService = ToastService.getInstance();
     const [modalProps, setModalProps] = useState<ModalProps>({
         isOpenLoginModal: false,
         isOpenQuizModal: false,
     });
 
-    const handleQuizModal = () => {
+    const handleQuizModal = useCallback(() => {
+        // TODO 추후 토스트 사용 시 추가.
+        // toastService.addToast('토스트!');
         setModalProps((prev) => ({ ...prev, isOpenQuizModal: !prev.isOpenQuizModal }));
-    };
+    }, []);
     const handleLoginModal = () => {
         setModalProps((prev) => ({ ...prev, isOpenLoginModal: !prev.isOpenLoginModal }));
     };
@@ -47,4 +52,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default React.memo(HomePage);

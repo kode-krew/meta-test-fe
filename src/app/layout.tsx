@@ -1,5 +1,5 @@
 import { FC } from 'react';
-
+import Toaster from '@src/components/common/toast/Toast';
 import './globals.css';
 
 interface LocaleLayoutProps {
@@ -8,7 +8,10 @@ interface LocaleLayoutProps {
 
 const LocaleLayout: FC<LocaleLayoutProps> = ({ children }) => (
     <html lang="ko">
-        <body>{children}</body>
+        <body>
+            {children}
+            <Toaster />
+        </body>
     </html>
 );
 
