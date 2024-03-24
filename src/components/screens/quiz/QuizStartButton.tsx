@@ -3,12 +3,11 @@ import Button from '@src/components/common/Button';
 
 interface QuizStartButtonProps {
     onClick: MouseEventHandler<HTMLButtonElement>;
-    disabled: boolean;
 }
 
-const QuizStartButton: FC<QuizStartButtonProps> = ({ onClick, disabled }) => (
+const QuizStartButton: FC<QuizStartButtonProps> = ({ onClick }) => (
     <div className="relative -bottom-2/3 w-full">
-        <Button variant="primary" onClick={onClick} disabled={disabled}>
+        <Button variant="primary" onClick={onClick}>
             퀴즈 시작
         </Button>
     </div>
