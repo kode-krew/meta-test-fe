@@ -44,26 +44,53 @@ export const options: ChartOptions<'bar'> = {
         },
     },
 };
-export const options2 = {
+const labels = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'ssss',
+    'April',
+    'May',
+    'June',
+    'July',
+    'ssss',
+];
+
+export const options2: ChartOptions<'bar'> = {
     layout: {
         padding: {
             top: 10,
         },
     },
     scales: {
+        x: {
+            // bar 너비 조정
+            ticks: {
+                maxTicksLimit: labels?.length,
+                padding: 0,
+            },
+            grid: {
+                display: false,
+            },
+        },
         y: {
             beginAtZero: true,
             ticks: {
                 display: false,
             },
             grid: {
-                drawTicks: false,
-                drawBorder: false,
+                drawTicks: true,
+                lineWidth: 2,
+                tickLength: 1,
             },
         },
     },
-
     maintainAspectRatio: false,
+
     plugins: {
         legend: {
             display: false,
@@ -71,15 +98,19 @@ export const options2 = {
     },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'ssss'];
-
 export const data = {
     labels,
     datasets: [
         {
             label: 'Dataset 2',
             data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            backgroundColor: '#6ac8d8',
+            borderRadius: Number.MAX_VALUE,
+            borderSkipped: false,
+            borderWidth: 1,
+            barPercentage: 1,
+            categoryPercentage: 1,
+            barThickness: 14,
         },
     ],
 };
