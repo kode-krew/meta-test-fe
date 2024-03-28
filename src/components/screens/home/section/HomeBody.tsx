@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import Image from 'next/image';
 import MetaMainImage from 'public/home/meta-test-main.png';
 import MainPageDescription from '../components/HomePageDescription';
@@ -24,4 +24,4 @@ const HomeBody: FC<HomeBodyProps> = () => (
     </footer>
 );
 
-export default HomeBody;
+export default React.memo(HomeBody);

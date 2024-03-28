@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 interface HomeFooterProps {}
 
@@ -22,4 +22,4 @@ const HomeFooter: FC<HomeFooterProps> = () => (
     </section>
 );
 
-export default HomeFooter;
+export default React.memo(HomeFooter);

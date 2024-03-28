@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler } from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 import Button from '@src/components/common/Button';
 
 interface HomeHeaderProps {
@@ -15,4 +15,4 @@ const HomeHeader: FC<HomeHeaderProps> = ({ onClickLoginButton }) => (
     </header>
 );
 
-export default HomeHeader;
+export default React.memo(HomeHeader);
