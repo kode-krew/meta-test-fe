@@ -7,6 +7,9 @@ export class ToastService {
 
     private messages: string[] = []; // 메시지 목록 관리
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    private constructor() {}
+
     public static getInstance(): ToastService {
         if (!ToastService.instance) {
             ToastService.instance = new ToastService();

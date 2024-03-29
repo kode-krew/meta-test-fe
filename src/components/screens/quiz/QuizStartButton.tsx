@@ -1,6 +1,5 @@
-import { FC, MouseEventHandler, useState } from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 import Button from '@src/components/common/Button';
-import Modal from '@src/components/common/Modal';
 
 interface QuizStartButtonProps {
     onClick: MouseEventHandler<HTMLButtonElement>;
@@ -15,4 +14,4 @@ const QuizStartButton: FC<QuizStartButtonProps> = ({ onClick, disabled }) => (
     </div>
 );
 
-export default QuizStartButton;
+export default React.memo(QuizStartButton);

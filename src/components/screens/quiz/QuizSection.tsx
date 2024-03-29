@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import Modal from '@src/components/common/Modal';
+import Modal from '@src/components/common/modal/Modal';
 import { useRouter } from 'next/navigation';
 import 'swiper/css';
 import { Autoplay, EffectCoverflow } from 'swiper/modules';

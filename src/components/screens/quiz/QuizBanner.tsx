@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 interface QuizBannerProps {}
 
@@ -20,4 +20,4 @@ const QuizBanner: FC<QuizBannerProps> = () => (
     </div>
 );
 
-export default QuizBanner;
+export default React.memo(QuizBanner);
