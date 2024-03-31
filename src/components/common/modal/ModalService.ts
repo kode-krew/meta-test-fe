@@ -2,14 +2,13 @@ import { ReactNode } from 'react';
 
 export interface ModalState {
     isOpen: boolean;
-    content: ReactNode | null;
-    backGroundColor?: string;
+    contents: Array<{ content: ReactNode; backGroundColor?: string }>;
 }
 
 export class ModalService {
     static instance: ModalService;
 
-    private currentState: ModalState = { isOpen: false, content: null }; // 현재 모달 상태 저장
+    private currentState: ModalState = { isOpen: false, contents: [] };
 
     subscribers: ((state: ModalState) => void)[] = [];
 
@@ -29,14 +28,20 @@ export class ModalService {
     }
 
     openModal(modalContent: ReactNode, backGroundColor?: string) {
-        const newState = { isOpen: true, content: modalContent, backGroundColor };
-        this.currentState = newState; // 현재 상태 업데이트
+        const newContents = [
+            ...this.currentState.contents,
+            { content: modalContent, backGroundColor },
+        ];
+        const newState = { isOpen: true, contents: newContents };
+        this.currentState = newState;
         this.subscribers.forEach((callback) => callback(newState));
     }
 
     closeModal() {
-        const newState = { isOpen: false, content: null };
-        this.currentState = newState; // 현재 상태 업데이트
+        const newContents = [...this.currentState.contents];
+        newContents.pop();
+        const newState = { isOpen: newContents.length > 0, contents: newContents };
+        this.currentState = newState;
         this.subscribers.forEach((callback) => callback(newState));
     }
 
