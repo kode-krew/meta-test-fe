@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import QuizBanner from '@src/components/screens/quiz/QuizBanner';
 import QuizSection from '@src/components/screens/quiz/QuizSection';
 
@@ -19,4 +20,4 @@ const QuizPageIndex = () => (
     </div>
 );
 
-export default QuizPageIndex;
+export default React.memo(QuizPageIndex);
