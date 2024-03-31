@@ -8,6 +8,12 @@ dependencies:
     '@faker-js/faker':
         specifier: ^8.4.1
         version: 8.4.1
+    '@tanstack/react-query':
+        specifier: ^5.28.9
+        version: 5.28.9(react@18.2.0)
+    '@tanstack/react-query-devtools':
+        specifier: ^5.28.10
+        version: 5.28.10(@tanstack/react-query@5.28.9)(react@18.2.0)
     '@types/recharts':
         specifier: ^1.8.29
         version: 1.8.29
@@ -1660,6 +1666,46 @@ packages:
             }
         dependencies:
             tslib: 2.6.2
+        dev: false
+
+    /@tanstack/query-core@5.28.9:
+        resolution:
+            {
+                integrity: sha512-hNlfCiqZevr3GRVPXS3MhaGW5hjcxvCsIQ4q6ff7EPlvFwYZaS+0d9EIIgofnegDaU2BbCDlyURoYfRl5rmzow==,
+            }
+        dev: false
+
+    /@tanstack/query-devtools@5.28.10:
+        resolution:
+            {
+                integrity: sha512-5UN629fKa5/1K/2Pd26gaU7epxRrYiT1gy+V+pW5K6hnf1DeUKK3pANSb2eHKlecjIKIhTwyF7k9XdyE2gREvQ==,
+            }
+        dev: false
+
+    /@tanstack/react-query-devtools@5.28.10(@tanstack/react-query@5.28.9)(react@18.2.0):
+        resolution:
+            {
+                integrity: sha512-D+SiHZTWhK2sNgBYj+xIvUOqonsKy74OLU/YHmRB5OZVLLTiekvZd12C3rKlU+WM69jid0hjEjuFqkULOMwc3A==,
+            }
+        peerDependencies:
+            '@tanstack/react-query': ^5.28.9
+            react: ^18.0.0
+        dependencies:
+            '@tanstack/query-devtools': 5.28.10
+            '@tanstack/react-query': 5.28.9(react@18.2.0)
+            react: 18.2.0
+        dev: false
+
+    /@tanstack/react-query@5.28.9(react@18.2.0):
+        resolution:
+            {
+                integrity: sha512-vwifBkGXsydsLxFOBMe3+f8kvtDoqDRDwUNjPHVDDt+FoBetCbOWAUHgZn4k+CVeZgLmy7bx6aKeDbe3e8koOQ==,
+            }
+        peerDependencies:
+            react: ^18.0.0
+        dependencies:
+            '@tanstack/query-core': 5.28.9
+            react: 18.2.0
         dev: false
 
     /@testing-library/dom@9.3.4:
