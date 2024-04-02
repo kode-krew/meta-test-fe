@@ -1,6 +1,7 @@
 import { FC, useCallback, useState } from 'react';
-import Modal from '@src/components/common/Modal';
 import RoundedButton from '@src/components/common/RoundedButton';
+import Modal from '@src/components/common/modal/Modal';
+import { ModalService } from '@src/components/common/modal/ModalService';
 import MyPageInformationEditModalScreen from '../components/MyPageInformationEditModalScreen';
 import MyPagePasswordEditModalScreen from '../components/MyPagePasswordEditModalScreen';
 
@@ -12,23 +13,27 @@ interface MyPageUserInformationSectionModalStateType {
 }
 
 const MyPageUserInformationSection: FC<MyPageUserInformationSectionProps> = () => {
-    const [modalState, setModalState] = useState<MyPageUserInformationSectionModalStateType>({
-        isOpenEditInformation: false,
-        isOpenEditPassword: false,
-    });
+    // const [modalState, setModalState] = useState<MyPageUserInformationSectionModalStateType>({
+    //     isOpenEditInformation: false,
+    //     isOpenEditPassword: false,
+    // });
+    const modalService = ModalService.getInstance();
+
+    const onClose = () => modalService.closeModal();
 
     const onClickEditInformationButton = () =>
-        setModalState((prev) => ({ ...prev, isOpenEditInformation: true }));
+        modalService.openModal(
+            <Modal onClose={onClose}>
+                <MyPageInformationEditModalScreen />
+            </Modal>,
+        );
 
     const onClickEditPasswordButton = () =>
-        setModalState((prev) => ({ ...prev, isOpenEditPassword: true }));
-
-    const onClose = () =>
-        setModalState((prev) => ({
-            ...prev,
-            isOpenEditInformation: false,
-            isOpenEditPassword: false,
-        }));
+        modalService.openModal(
+            <Modal onClose={onClose}>
+                <MyPagePasswordEditModalScreen />
+            </Modal>,
+        );
 
     return (
         <section className="flex flex-col gap-5">
@@ -59,16 +64,6 @@ const MyPageUserInformationSection: FC<MyPageUserInformationSectionProps> = () =
                     <span>test@test.com</span>
                 </section>
             </main>
-            {modalState.isOpenEditInformation && (
-                <Modal onClose={onClose}>
-                    <MyPageInformationEditModalScreen />
-                </Modal>
-            )}
-            {modalState.isOpenEditPassword && (
-                <Modal onClose={onClose}>
-                    <MyPagePasswordEditModalScreen />
-                </Modal>
-            )}
         </section>
     );
 };

@@ -2,32 +2,24 @@
 
 import React, { ReactNode, useEffect, useState } from 'react';
 import Modal from './Modal';
-import { ModalService } from './ModalService';
+import { ModalService, ModalState } from './ModalService';
 
 const GlobalModal: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [content, setContent] = useState<ReactNode>(null);
-    const [backGroundColor, setBackGroundColor] = useState<string | undefined>(undefined);
+    const [contents, setContents] = useState<
+        Array<{ content: ReactNode; backGroundColor?: string }>
+    >([]);
 
     useEffect(() => {
         const modalService = ModalService.getInstance();
-
         const handleModalChange = ({
             isOpen: isModalOpen,
-            content: modalContent,
-            backGroundColor: modalBackGroundColor,
-        }: {
-            isOpen: boolean;
-            content: ReactNode;
-            backGroundColor?: string;
-        }) => {
+            contents: modalContents,
+        }: ModalState) => {
             setIsOpen(isModalOpen);
-            setContent(modalContent);
-            setBackGroundColor(modalBackGroundColor);
+            setContents(modalContents);
         };
-
         modalService.subscribe(handleModalChange);
-
         return () => {
             modalService.unsubscribe(handleModalChange);
         };
@@ -38,12 +30,17 @@ const GlobalModal: React.FC = () => {
     }
 
     return (
-        <Modal
-            onClose={() => ModalService.getInstance().closeModal()}
-            backGroundColor={backGroundColor}
-        >
-            {content}
-        </Modal>
+        <>
+            {contents.map(({ content, backGroundColor }) => (
+                <Modal
+                    key={crypto.randomUUID()}
+                    onClose={() => ModalService.getInstance().closeModal()}
+                    backGroundColor={backGroundColor}
+                >
+                    {content}
+                </Modal>
+            ))}
+        </>
     );
 };
 
