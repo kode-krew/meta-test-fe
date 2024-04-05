@@ -10,7 +10,7 @@ interface PostSignupBody {
     age?: number;
 }
 
-export const PostSignup = async (body: PostSignupBody) => {
+export const postSignup = async (body: PostSignupBody) => {
     const { data } = await defaultRequest.post<PostSignupResponse>('/users', { body });
     return data;
 };

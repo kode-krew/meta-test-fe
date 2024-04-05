@@ -4,7 +4,7 @@ import CommonInput from '@src/components/common/CommonInput';
 import Modal from '@src/components/common/modal/Modal';
 import { ModalService } from '@src/components/common/modal/ModalService';
 import HomePasswordFindScreen from './HomePasswordFindScreen';
-import HomeSignupScreen from './HomeSignupScreen';
+import HomeSignupScreen from './signup/HomeSignupScreen';
 
 interface HomeBasicLoginSectionProps {}
 
