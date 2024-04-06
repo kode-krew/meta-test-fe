@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getCookie } from 'cookies-next';
 
 const defaultRequest = axios.create({
-    baseURL: process.env.META_TEST_SERVER_HOST_URL,
+    baseURL: process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL,
     headers: {
         'Content-Type': 'application/json',
     },

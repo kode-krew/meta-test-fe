@@ -11,9 +11,11 @@ interface LocaleLayoutProps {
 const LocaleLayout: FC<LocaleLayoutProps> = ({ children }) => (
     <html lang="ko">
         <body>
-            <TanstackQueryProvider>{children}</TanstackQueryProvider>
-            <Toaster />
-            <GlobalModal />
+            <TanstackQueryProvider>
+                {children}
+                <Toaster />
+                <GlobalModal />
+            </TanstackQueryProvider>
         </body>
     </html>
 );
