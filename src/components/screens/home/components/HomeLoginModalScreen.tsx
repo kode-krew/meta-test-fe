@@ -3,9 +3,11 @@ import GoogleIcon from '@src/components/common/Icons/GoogleIcon';
 import KakaoIcon from '@src/components/common/Icons/KakaoIcon';
 import HomeBasicLoginSection from './HomeBasicLoginSection';
 
-interface HomeLoginModalScreenProps {}
+interface HomeLoginModalScreenProps {
+    onSuccessLogin: VoidFunction;
+}
 
-const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = () => (
+const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = ({ onSuccessLogin }) => (
     <div
         className="
    w-96
@@ -29,7 +31,7 @@ const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = () => (
             </button>
         </section>
         <hr className="mt-4 h-px border-none bg-violet-400" />
-        <HomeBasicLoginSection />
+        <HomeBasicLoginSection onSuccessLogin={onSuccessLogin} />
     </div>
 );
 

@@ -1,3 +1,5 @@
+'use-client';
+
 import { ChangeEvent, FC, MouseEvent, MouseEventHandler, useState } from 'react';
 import Button from '@src/components/common/Button';
 import SelectBox, { SelectBoxOptionType } from '@src/components/common/SelectBox';

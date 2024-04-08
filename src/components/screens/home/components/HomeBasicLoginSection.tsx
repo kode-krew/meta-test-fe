@@ -6,9 +6,11 @@ import { ModalService } from '@src/components/common/modal/ModalService';
 import HomePasswordFindScreen from './HomePasswordFindScreen';
 import HomeSignupScreen from './signup/HomeSignupScreen';
 
-interface HomeBasicLoginSectionProps {}
+interface HomeBasicLoginSectionProps {
+    onSuccessLogin: VoidFunction;
+}
 
-const HomeBasicLoginSection: FC<HomeBasicLoginSectionProps> = () => {
+const HomeBasicLoginSection: FC<HomeBasicLoginSectionProps> = ({ onSuccessLogin }) => {
     const modalService = ModalService.getInstance();
 
     const onCloseModal = () => {
@@ -25,7 +27,7 @@ const HomeBasicLoginSection: FC<HomeBasicLoginSectionProps> = () => {
     const onClickSignup = () => {
         modalService.openModal(
             <Modal onClose={onCloseModal}>
-                <HomeSignupScreen />
+                <HomeSignupScreen onSuccessLogin={onSuccessLogin} />
             </Modal>,
         );
     };
