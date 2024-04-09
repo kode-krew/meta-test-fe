@@ -5,7 +5,7 @@ import Button from '@src/components/common/Button';
 import { ModalService } from '@src/components/common/modal/ModalService';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
-import HomeLoginModalScreen from '../components/HomeLoginModalScreen';
+import HomeLoginModalScreen from '../components/login/HomeLoginModalScreen';
 
 interface HomeHeaderProps {}
 
