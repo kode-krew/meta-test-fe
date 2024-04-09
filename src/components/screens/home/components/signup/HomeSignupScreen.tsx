@@ -1,16 +1,21 @@
 import { FC } from 'react';
+import { postLogin } from '@src/api/postLogin';
 import { postSignup } from '@src/api/postSingup';
 import { ModalService } from '@src/components/common/modal/ModalService';
 import { ToastService } from '@src/components/common/toast/ToastService';
+import defaultRequest from '@src/lib/axios/defaultRequest';
 import { useMutation } from '@tanstack/react-query';
-import { isAxiosError } from 'axios';
+import { AxiosResponse, isAxiosError } from 'axios';
+import { setCookie } from 'cookies-next';
 import { FormProvider, useForm } from 'react-hook-form';
 import HomeSignupButton from './HomeSignupButton';
 import HomeSignupPassword from './HomeSignupPassword';
 import HomeSignupPasswordConfirm from './HomeSignupPasswordConfirm';
 import HomeSingupEmail from './HomeSingupEmail';
 
-interface HomeSignupScreenProps {}
+interface HomeSignupScreenProps {
+    onSuccessLogin: VoidFunction;
+}
 
 export interface HomeSignupFormValue {
     email: string;
@@ -18,7 +23,7 @@ export interface HomeSignupFormValue {
     passwordConfirm: string;
 }
 
-const HomeSignupScreen: FC<HomeSignupScreenProps> = () => {
+const HomeSignupScreen: FC<HomeSignupScreenProps> = ({ onSuccessLogin }) => {
     const toastService = ToastService.getInstance();
     const modalService = ModalService.getInstance();
 
@@ -34,6 +39,19 @@ const HomeSignupScreen: FC<HomeSignupScreenProps> = () => {
         mutationFn: postSignup,
     });
 
+    const login = useMutation({
+        mutationFn: postLogin,
+        onSuccess: async (data) => {
+            if (data) {
+                const accessToken = data.headers.access_token;
+                const refreshToken = data.headers.refresh_token;
+                defaultRequest.defaults.headers.common.Authorization = accessToken;
+                await setCookie('refreshToken', refreshToken);
+                onSuccessLogin();
+            }
+        },
+    });
+
     const onSubmit = async ({ email, password }: HomeSignupFormValue) => {
         submitSignupForm.mutate(
             { email, password },
@@ -41,6 +59,10 @@ const HomeSignupScreen: FC<HomeSignupScreenProps> = () => {
                 onSuccess: async () => {
                     await toastService.addToast('가입이 완료되었습니다.');
                     await modalService.closeEntireModal();
+                    login.mutate({
+                        email,
+                        password,
+                    });
                 },
                 onError: (data) => {
                     if (isAxiosError(data)) {

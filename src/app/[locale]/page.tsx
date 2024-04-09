@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useCallback } from 'react';
+import React from 'react';
 import { ModalService } from '@src/components/common/modal/ModalService';
 import HomeFooterButton from '@src/components/screens/home/components/HomeFooterButton';
 import HomeLoginModalScreen from '@src/components/screens/home/components/HomeLoginModalScreen';
@@ -8,36 +6,38 @@ import HomeQuizSelectScreen from '@src/components/screens/home/components/HomeQu
 import HomeBody from '@src/components/screens/home/section/HomeBody';
 import HomeFooter from '@src/components/screens/home/section/HomeFooter';
 import HomeHeader from '@src/components/screens/home/section/HomeHeader';
+import { getCookie } from 'cookies-next';
+import { cookies } from 'next/headers';
 
 const HomePage = () => {
     // TODO 추후 토스트 사용 시 추가.
     // const toastService = ToastService.getInstance();
-    const modalService = ModalService.getInstance();
 
-    const handleQuizModal = useCallback(() => {
+    // const { push } = useRouter();
+
+    const handleQuizModal = () => {
         // TODO 추후 토스트 사용 시 추가.
         // toastService.addToast('토스트!');
-        modalService.openModal(
-            <HomeQuizSelectScreen
-                testId="quiz-modal"
-                onClickButton={() => {
-                    modalService.closeModal();
-                }}
-            />,
-        );
-    }, [modalService]);
-    const handleLoginModal = () => {
-        modalService.openModal(<HomeLoginModalScreen />);
+        // modalService.openModal(
+        //     <HomeQuizSelectScreen
+        //         testId="quiz-modal"
+        //         onClickButton={() => {
+        //             modalService.closeModal();
+        //         }}
+        //     />,
+        // );
     };
+
+    // const buttonText = token ? '마이페이지' : '로그인 / 회원가입';
 
     return (
         <div className="w-screen">
-            <HomeHeader onClickLoginButton={handleLoginModal} />
+            <HomeHeader />
             <HomeBody />
             <HomeFooter />
-            <HomeFooterButton onClick={handleQuizModal} />
+            <HomeFooterButton />
         </div>
     );
 };
 
-export default React.memo(HomePage);
+export default HomePage;
