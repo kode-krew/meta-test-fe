@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
+import { redirect } from 'next/navigation';
 
 const defaultRequest = axios.create({
     baseURL: process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL,
@@ -17,6 +18,7 @@ defaultRequest.interceptors.response.use(
 
             if (!refreshToken) {
                 await alert('로그인이 필요합니다. 로그인 해 주세요.');
+                window.location.href = '/';
                 return Promise.reject(error);
             }
 
@@ -26,11 +28,12 @@ defaultRequest.interceptors.response.use(
                 });
                 const accessToken = response.headers.access_token;
                 // 토큰 갱신 성공 시 새로운 토큰으로 요청 재시도
-                defaultRequest.defaults.headers.Authorization = accessToken;
+                defaultRequest.defaults.headers.Authorization = `Bearer ${accessToken}`;
                 return await defaultRequest.request(error.config);
             } catch (refreshError) {
                 // 토큰 갱신에 실패하면 에러 반환
                 await alert('토큰 갱신에 실패했습니다. 재 로그인 해 주세요.');
+                window.location.href = '/';
                 return Promise.reject(refreshError);
             }
         }
