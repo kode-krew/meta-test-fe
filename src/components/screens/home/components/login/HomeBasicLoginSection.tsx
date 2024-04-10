@@ -13,7 +13,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import HomeBasicLoginEmailInput from './HomeBasicLoginEmailInput';
 import HomeBasicLoginPasswordInput from './HomeBasicLoginPasswordInput';
 import HomeBasicLoginSubmitButton from './HomeBasicLoginSubmitButton';
-import HomePasswordFindScreen from '../HomePasswordFindScreen';
+import HomePasswordFindScreen from '../password-find/HomePasswordFindScreen';
 import HomeSignupScreen from '../signup/HomeSignupScreen';
 
 interface HomeBasicLoginSectionProps {
