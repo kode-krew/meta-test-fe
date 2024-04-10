@@ -21,14 +21,12 @@ defaultRequest.interceptors.response.use(
             }
 
             try {
-                const response = await defaultRequest.get('/oauth2/renew-token', {
-                    headers: {
-                        'Authorization-Refresh': refreshToken,
-                    },
+                const response = await defaultRequest.post('/auth/token/refresh', {
+                    refresh_token: refreshToken,
                 });
-
+                const accessToken = response.headers.access_token;
                 // 토큰 갱신 성공 시 새로운 토큰으로 요청 재시도
-                defaultRequest.defaults.headers.Authorization = response.headers.authorization;
+                defaultRequest.defaults.headers.Authorization = accessToken;
                 return await defaultRequest.request(error.config);
             } catch (refreshError) {
                 // 토큰 갱신에 실패하면 에러 반환
