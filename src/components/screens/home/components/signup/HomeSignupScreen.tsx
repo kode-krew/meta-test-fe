@@ -45,7 +45,7 @@ const HomeSignupScreen: FC<HomeSignupScreenProps> = ({ onSuccessLogin }) => {
             if (data) {
                 const accessToken = data.headers.access_token;
                 const refreshToken = data.headers.refresh_token;
-                defaultRequest.defaults.headers.common.Authorization = accessToken;
+                defaultRequest.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
                 await setCookie('refreshToken', refreshToken);
                 onSuccessLogin();
             }

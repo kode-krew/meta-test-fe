@@ -1,4 +1,4 @@
-export interface PostSignupResponse {
+export interface UserInformationResponse {
     Id?: string;
     email: string;
     nickname?: string;
