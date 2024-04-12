@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { postLogin } from '@src/api/postLogin';
 import { postSignup } from '@src/api/postSingup';
-import { ModalService } from '@src/components/common/modal/ModalService';
-import { ToastService } from '@src/components/common/toast/ToastService';
 import defaultRequest from '@src/lib/axios/defaultRequest';
+import { ModalService } from '@src/service/ModalService';
+import { ToastService } from '@src/service/ToastService';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosResponse, isAxiosError } from 'axios';
 import { setCookie } from 'cookies-next';

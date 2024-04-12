@@ -12,7 +12,9 @@ const QuizAnswerSortingButtonSection: FC<QuizAnswerSortingButtonSectionProps> = 
     return (
         <section className="mt-5 flex w-full flex-wrap gap-5">
             {words.length > 0 &&
-                words?.map((item) => <QuizAnswerSortingButton word={item} key={item} />)}
+                words?.map((item) => (
+                    <QuizAnswerSortingButton word={item} key={item} onClick={() => {}} />
+                ))}
         </section>
     );
 };
