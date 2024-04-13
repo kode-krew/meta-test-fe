@@ -20,7 +20,7 @@ const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = ({ onSuccessLogin })
     >
         <p className="text-2xl font-bold">로그인</p>
         <section className="mt-3 flex flex-col gap-3">
-            <Link href={`${process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL}/auth/login/google`}>
+            <a href={`${process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL}/auth/login/google`}>
                 <button
                     type="button"
                     className="flex h-10 w-full  items-center gap-2 rounded-md bg-slate-200 p-3"
@@ -28,8 +28,8 @@ const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = ({ onSuccessLogin })
                     <GoogleIcon />
                     <p className="flex w-full justify-center text-sm">Continues With Google</p>
                 </button>
-            </Link>
-            <Link href={`${process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL}/auth/login/kakao`}>
+            </a>
+            <a href={`${process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL}/auth/login/kakao`}>
                 <button
                     type="button"
                     className="flex h-10 w-full  items-center gap-2 rounded-md bg-yellow-300 p-3"
@@ -37,7 +37,7 @@ const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = ({ onSuccessLogin })
                     <KakaoIcon />
                     <p className="flex w-full justify-center text-sm">카카오 로그인</p>
                 </button>
-            </Link>
+            </a>
         </section>
         <hr className="mt-4 h-px border-none bg-violet-400" />
         <HomeBasicLoginSection onSuccessLogin={onSuccessLogin} />
