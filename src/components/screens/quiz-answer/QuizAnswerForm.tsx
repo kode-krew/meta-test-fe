@@ -13,12 +13,6 @@ export interface QuizAnswerFormType {
 }
 
 export const QuizAnswerForm: FC<QuizAnswerFormProps> = () => {
-    const quizList = QuizListService.getInstance();
-
-    useEffect(() => {
-        console.log(quizList.getQuizList());
-    }, [quizList]);
-
     const control = useForm<QuizAnswerFormType>({
         defaultValues: {
             inputValue: '',
@@ -30,7 +24,7 @@ export const QuizAnswerForm: FC<QuizAnswerFormProps> = () => {
     const setSortingAnswers = useCallback(
         (value: string) => {
             const originalArr = getValues('answers');
-            if (originalArr.includes(value)) {
+            if (originalArr.includes(value) || !value) {
                 return;
             }
             setValue('answers', [...originalArr, value]);

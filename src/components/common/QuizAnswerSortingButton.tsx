@@ -21,7 +21,7 @@ const QuizAnswerSortingButton: FC<QuizAnswerSortingButtonProps> = ({
     rounded-3xl bg-yellow-200 pb-2 pl-5 pr-5 pt-2 shadow-md"
     >
         {onClick && (
-            <div className="absolute -right-1 -top-2 cursor-pointer">
+            <div className="absolute -right-1 -top-2 cursor-pointer" onClick={onClick}>
                 <CloseIcon />
             </div>
         )}
