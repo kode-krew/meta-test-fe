@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import ToastMessage from './ToastMessage';
-import { ToastService } from './ToastService';
+import { ToastService } from '../../../service/ToastService';
 
 interface IndividualToastType {
     id: number;

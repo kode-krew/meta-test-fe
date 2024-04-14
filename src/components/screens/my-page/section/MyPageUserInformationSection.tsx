@@ -1,7 +1,7 @@
 import { FC, useCallback, useState } from 'react';
 import RoundedButton from '@src/components/common/RoundedButton';
 import Modal from '@src/components/common/modal/Modal';
-import { ModalService } from '@src/components/common/modal/ModalService';
+import { ModalService } from '@src/service/ModalService';
 import MyPageInformationEditModalScreen from '../components/MyPageInformationEditModalScreen';
 import MyPagePasswordEditModalScreen from '../components/MyPagePasswordEditModalScreen';
 

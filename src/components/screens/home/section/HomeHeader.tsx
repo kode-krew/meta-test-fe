@@ -4,8 +4,8 @@ import React, { FC, useCallback, useEffect, useLayoutEffect, useState } from 're
 import { API_GET_GOOGLE_LOGIN, getGoogleLogin } from '@src/api/getGoogleLogin';
 import { API_GET_KAKAKO_LOGIN, getKakaoLogin } from '@src/api/getKakaoLogin';
 import Button from '@src/components/common/Button';
-import { ModalService } from '@src/components/common/modal/ModalService';
 import defaultRequest from '@src/lib/axios/defaultRequest';
+import { ModalService } from '@src/service/ModalService';
 import { useQuery } from '@tanstack/react-query';
 import { getCookie, setCookie } from 'cookies-next';
 import { useRouter, useSearchParams } from 'next/navigation';

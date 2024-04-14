@@ -1,5 +1,6 @@
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import CommonInput from '@src/components/common/CommonInput';
+import { QuizListService } from '@src/service/QuizListService';
 import { FormProvider, useForm } from 'react-hook-form';
 import QuizAnswerSortingButtonSection from './QuizAnswerSortingButtonSection';
 import QuizAnswerSubmitButton from './QuizAnswerSubmitButton';
@@ -12,6 +13,12 @@ export interface QuizAnswerFormType {
 }
 
 export const QuizAnswerForm: FC<QuizAnswerFormProps> = () => {
+    const quizList = QuizListService.getInstance();
+
+    useEffect(() => {
+        console.log(quizList.getQuizList());
+    }, [quizList]);
+
     const control = useForm<QuizAnswerFormType>({
         defaultValues: {
             inputValue: '',
