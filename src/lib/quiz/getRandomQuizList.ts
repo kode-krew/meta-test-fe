@@ -1,7 +1,6 @@
 import crypto from 'crypto';
+import { QuizDifficulty } from '@src/types/api/tests';
 import quizJson from 'json/korean_list.json';
-
-export type QuizDifficulty = 'beginner' | 'intermediate' | 'advanced';
 
 export interface GetRandomQuizListParameter {
     difficulty?: QuizDifficulty;
