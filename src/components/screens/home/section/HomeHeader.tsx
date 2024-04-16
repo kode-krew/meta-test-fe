@@ -4,6 +4,7 @@ import React, { FC, useCallback, useEffect, useLayoutEffect, useState } from 're
 import { API_GET_GOOGLE_LOGIN, getGoogleLogin } from '@src/api/getGoogleLogin';
 import { API_GET_KAKAKO_LOGIN, getKakaoLogin } from '@src/api/getKakaoLogin';
 import Button from '@src/components/common/Button';
+import useLogin from '@src/hooks/useLogin';
 import defaultRequest from '@src/lib/axios/defaultRequest';
 import { ModalService } from '@src/service/ModalService';
 import { useQuery } from '@tanstack/react-query';
@@ -14,53 +15,13 @@ import HomeLoginModalScreen from '../components/login/HomeLoginModalScreen';
 interface HomeHeaderProps {}
 
 const HomeHeader: FC<HomeHeaderProps> = () => {
-    const { push, replace } = useRouter();
-    const { get } = useSearchParams();
+    const { push } = useRouter();
     const modalService = ModalService.getInstance();
-    const token = getCookie('refreshToken');
-    const [isLogin, setIsLogin] = useState(false);
-    const code = get('code');
-    const googleLogin = useQuery({
-        queryFn: () => getGoogleLogin({ code: String(code) }),
-        queryKey: [API_GET_GOOGLE_LOGIN],
-        enabled: !!code,
-    });
-    const kakaoLogin = useQuery({
-        queryFn: () => getKakaoLogin({ code: String(code) }),
-        queryKey: [API_GET_KAKAKO_LOGIN],
-        enabled: !!code,
-    });
+    const { isLogin, setIsLogin } = useLogin();
 
-    useEffect(() => {
-        async function kakaoLoginProcess() {
-            if (kakaoLogin.data) {
-                const accessToken = kakaoLogin.data.headers.access_token;
-                const refreshToken = kakaoLogin.data.headers.refresh_token;
-                defaultRequest.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-                await setCookie('refreshToken', refreshToken);
-                await setIsLogin(true);
-                replace('/');
-            }
-        }
-        kakaoLoginProcess();
-    }, [kakaoLogin.data, replace]);
-    useEffect(() => {
-        async function googleLoginProcess() {
-            if (googleLogin.data) {
-                const accessToken = googleLogin.data.headers.access_token;
-                const refreshToken = googleLogin.data.headers.refresh_token;
-                defaultRequest.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-                await setCookie('refreshToken', refreshToken);
-                await setIsLogin(true);
-                replace('/');
-            }
-        }
-        googleLoginProcess();
-    }, [googleLogin.data, replace]);
-
-    const onSuccessLogin = () => {
+    const onSuccessLogin = useCallback(() => {
         setIsLogin(true);
-    };
+    }, [setIsLogin]);
 
     const onClickLoginButton = useCallback(() => {
         if (isLogin) {
@@ -68,11 +29,7 @@ const HomeHeader: FC<HomeHeaderProps> = () => {
             return;
         }
         modalService.openModal(<HomeLoginModalScreen onSuccessLogin={onSuccessLogin} />);
-    }, [isLogin, modalService, push]);
-
-    useLayoutEffect(() => {
-        setIsLogin(!!token);
-    }, [token]);
+    }, [isLogin, modalService, onSuccessLogin, push]);
 
     return (
         <header className="m-5 flex flex-row-reverse">
