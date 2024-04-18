@@ -12,6 +12,7 @@ const useLogin = () => {
     const { get } = useSearchParams();
     const token = getCookie('refreshToken');
     const code = get('code');
+    const prevPathname = getCookie('prev-login')?.toString();
 
     const googleLogin = useQuery({
         queryFn: () => getGoogleLogin({ code: String(code) }),
@@ -32,11 +33,11 @@ const useLogin = () => {
                 defaultRequest.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
                 await setCookie('refreshToken', refreshToken);
                 await setIsLogin(true);
-                replace('/');
+                replace(prevPathname ?? '/');
             }
         }
         kakaoLoginProcess();
-    }, [kakaoLogin.data, replace]);
+    }, [kakaoLogin.data, prevPathname, replace]);
     useEffect(() => {
         async function googleLoginProcess() {
             if (googleLogin.data) {
@@ -45,11 +46,11 @@ const useLogin = () => {
                 defaultRequest.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
                 await setCookie('refreshToken', refreshToken);
                 await setIsLogin(true);
-                replace('/');
+                replace(prevPathname ?? '/');
             }
         }
         googleLoginProcess();
-    }, [googleLogin.data, replace]);
+    }, [googleLogin.data, prevPathname, replace]);
 
     useLayoutEffect(() => {
         setIsLogin(!!token);
