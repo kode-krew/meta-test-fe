@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 import HomeIcon from '@src/components/common/Icons/HomeIcon';
 import { useRouter } from 'next/navigation';

@@ -1,22 +1,23 @@
-import React, { FC, useEffect } from 'react';
-import { API_GET_GOOGLE_LOGIN, getGoogleLogin } from '@src/api/getGoogleLogin';
-import { API_GET_KAKAKO_LOGIN, getKakaoLogin } from '@src/api/getKakaoLogin';
+import React, { FC } from 'react';
 import GoogleIcon from '@src/components/common/Icons/GoogleIcon';
 import KakaoIcon from '@src/components/common/Icons/KakaoIcon';
-import { useQuery } from '@tanstack/react-query';
 import { setCookie } from 'cookies-next';
-import Link from 'next/link';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import HomeBasicLoginSection from './HomeBasicLoginSection';
 
 interface HomeLoginModalScreenProps {
     onSuccessLogin: VoidFunction;
 }
 
+type SocialType = 'google' | 'kakao';
+
 const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = ({ onSuccessLogin }) => {
     const pathName = usePathname();
-    const onClickSnsLogin = () => {
-        setCookie('prev-login', pathName);
+    const onClickSnsLogin = (socialType: SocialType) => {
+        setCookie('social-login-info', {
+            loginPath: pathName,
+            socialType,
+        });
     };
 
     return (
@@ -30,7 +31,9 @@ const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = ({ onSuccessLogin })
                 <a href={`${process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL}/auth/login/google`}>
                     <button
                         type="button"
-                        onClick={onClickSnsLogin}
+                        onClick={() => {
+                            onClickSnsLogin('google');
+                        }}
                         className="flex h-10 w-full  items-center gap-2 rounded-md bg-slate-200 p-3"
                     >
                         <GoogleIcon />
@@ -40,7 +43,9 @@ const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = ({ onSuccessLogin })
                 <a href={`${process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL}/auth/login/kakao`}>
                     <button
                         type="button"
-                        onClick={onClickSnsLogin}
+                        onClick={() => {
+                            onClickSnsLogin('kakao');
+                        }}
                         className="flex h-10 w-full  items-center gap-2 rounded-md bg-yellow-300 p-3"
                     >
                         <KakaoIcon />

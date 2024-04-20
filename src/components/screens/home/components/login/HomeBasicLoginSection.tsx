@@ -37,12 +37,13 @@ const HomeBasicLoginSection: FC<HomeBasicLoginSectionProps> = ({ onSuccessLogin 
                 defaultRequest.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
                 await setCookie('refreshToken', refreshToken);
                 await onSuccessLogin();
+                toastService.addToast('로그인 되었습니다.');
                 modalService.closeEntireModal();
             }
         },
         onError: (data) => {
             if (isAxiosError(data)) {
-                toastService.addToast(data.response?.data.message);
+                toastService.addToast('가입자 정보가 일치하지 않습니다.');
                 return;
             }
             toastService.addToast(data.message);

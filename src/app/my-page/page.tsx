@@ -1,15 +1,19 @@
-'use client';
-
 import MyPageHeaderSection from '@src/components/screens/my-page/section/MyPageHeaderSection';
 import MyPageTestRecordSection from '@src/components/screens/my-page/section/MyPageTestRecordSection';
 import MyPageUserInformationSection from '@src/components/screens/my-page/section/MyPageUserInformationSection';
+import { getCookie } from 'cookies-next';
+import { cookies } from 'next/headers';
 
-const QuizAnswerPage = () => (
-    <div className="flex flex-col gap-10">
-        <MyPageHeaderSection />
-        <MyPageUserInformationSection />
-        <MyPageTestRecordSection />
-    </div>
-);
+const MyPage = () => {
+    const token = getCookie('refreshToken', { cookies });
 
-export default QuizAnswerPage;
+    return (
+        <div className="flex flex-col gap-10">
+            <MyPageHeaderSection />
+            <MyPageUserInformationSection isLogin={!!token} />
+            <MyPageTestRecordSection isLoginSns={!!token} />
+        </div>
+    );
+};
+
+export default MyPage;

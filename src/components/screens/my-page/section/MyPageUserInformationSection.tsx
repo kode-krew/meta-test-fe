@@ -1,22 +1,17 @@
-import { FC, useCallback, useState } from 'react';
+'use client';
+
+import { FC } from 'react';
 import RoundedButton from '@src/components/common/RoundedButton';
 import Modal from '@src/components/common/modal/Modal';
 import { ModalService } from '@src/service/ModalService';
 import MyPageInformationEditModalScreen from '../components/MyPageInformationEditModalScreen';
 import MyPagePasswordEditModalScreen from '../components/MyPagePasswordEditModalScreen';
 
-interface MyPageUserInformationSectionProps {}
-
-interface MyPageUserInformationSectionModalStateType {
-    isOpenEditInformation: boolean;
-    isOpenEditPassword: boolean;
+interface MyPageUserInformationSectionProps {
+    isLogin: boolean;
 }
 
-const MyPageUserInformationSection: FC<MyPageUserInformationSectionProps> = () => {
-    // const [modalState, setModalState] = useState<MyPageUserInformationSectionModalStateType>({
-    //     isOpenEditInformation: false,
-    //     isOpenEditPassword: false,
-    // });
+const MyPageUserInformationSection: FC<MyPageUserInformationSectionProps> = ({ isLogin }) => {
     const modalService = ModalService.getInstance();
 
     const onClose = () => modalService.closeModal();
