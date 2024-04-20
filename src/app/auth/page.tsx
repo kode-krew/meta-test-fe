@@ -1,8 +1,10 @@
-import HomeFooterButton from '@src/components/screens/home/components/HomeFooterButton';
-import HomeBody from '@src/components/screens/home/section/HomeBody';
-import HomeFooter from '@src/components/screens/home/section/HomeFooter';
-import HomeHeader from '@src/components/screens/home/section/HomeHeader';
+'use client';
 
-const HomePage = () => <div className="w-screen">엥;ㅔ에;</div>;
+import useLogin from '@src/hooks/useLogin';
 
-export default HomePage;
+const AuthPage = () => {
+    useLogin();
+    return <div />;
+};
+
+export default AuthPage;
