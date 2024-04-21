@@ -1,41 +1,37 @@
 'use client';
 
-import React, { FC, useCallback, useEffect, useLayoutEffect, useState } from 'react';
-import { API_GET_GOOGLE_LOGIN, getGoogleLogin } from '@src/api/getGoogleLogin';
-import { API_GET_KAKAKO_LOGIN, getKakaoLogin } from '@src/api/getKakaoLogin';
+import React, { FC, useCallback, useState } from 'react';
 import Button from '@src/components/common/Button';
-import useLogin from '@src/hooks/useLogin';
-import defaultRequest from '@src/lib/axios/defaultRequest';
 import { ModalService } from '@src/service/ModalService';
-import { useQuery } from '@tanstack/react-query';
-import { getCookie, setCookie } from 'cookies-next';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import HomeLoginModalScreen from '../components/login/HomeLoginModalScreen';
 
-interface HomeHeaderProps {}
+interface HomeHeaderProps {
+    isLoginSns: boolean;
+}
 
-const HomeHeader: FC<HomeHeaderProps> = () => {
+const HomeHeader: FC<HomeHeaderProps> = ({ isLoginSns }) => {
     const { push } = useRouter();
     const modalService = ModalService.getInstance();
-    const { isLogin, setIsLogin } = useLogin();
+    const [isLoginNormal, setIsLoginNormal] = useState(false);
 
     const onSuccessLogin = useCallback(() => {
-        setIsLogin(true);
-    }, [setIsLogin]);
+        setIsLoginNormal(true);
+    }, []);
 
     const onClickLoginButton = useCallback(() => {
-        if (isLogin) {
+        if (isLoginNormal || isLoginSns) {
             push('/my-page');
             return;
         }
         modalService.openModal(<HomeLoginModalScreen onSuccessLogin={onSuccessLogin} />);
-    }, [isLogin, modalService, onSuccessLogin, push]);
+    }, [isLoginNormal, isLoginSns, modalService, onSuccessLogin, push]);
 
     return (
         <header className="m-5 flex flex-row-reverse">
             <div>
                 <Button onClick={onClickLoginButton} variant="secondary">
-                    {isLogin ? '마이페이지' : '로그인 / 회원가입'}
+                    {isLoginSns || isLoginNormal ? '마이페이지' : '로그인 / 회원가입'}
                 </Button>
             </div>
         </header>
