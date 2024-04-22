@@ -28,12 +28,12 @@ const useSocialLogin = () => {
     const googleLogin = useQuery({
         queryFn: () => getGoogleLogin({ code: String(code) }),
         queryKey: [API_GET_GOOGLE_LOGIN],
-        enabled: !!code && socialInfoObj.socialType === 'google',
+        enabled: !!code && socialInfoObj?.socialType === 'google',
     });
     const kakaoLogin = useQuery({
         queryFn: () => getKakaoLogin({ code: String(code) }),
         queryKey: [API_GET_KAKAKO_LOGIN],
-        enabled: !!code && socialInfoObj.socialType === 'kakao',
+        enabled: !!code && socialInfoObj?.socialType === 'kakao',
     });
 
     useEffect(() => {
@@ -48,7 +48,7 @@ const useSocialLogin = () => {
             }
         }
         kakaoLoginProcess();
-    }, [kakaoLogin.data, push, socialInfoObj.loginPath, toastService]);
+    }, [kakaoLogin.data, push, socialInfoObj?.loginPath, toastService]);
     useEffect(() => {
         async function googleLoginProcess() {
             if (googleLogin.data) {
@@ -61,7 +61,7 @@ const useSocialLogin = () => {
             }
         }
         googleLoginProcess();
-    }, [googleLogin.data, push, socialInfoObj.loginPath, toastService]);
+    }, [googleLogin.data, push, socialInfoObj?.loginPath, toastService]);
 };
 
 export default useSocialLogin;

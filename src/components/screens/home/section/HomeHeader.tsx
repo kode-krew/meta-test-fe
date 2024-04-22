@@ -1,8 +1,9 @@
 'use client';
 
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 import Button from '@src/components/common/Button';
 import { ModalService } from '@src/service/ModalService';
+import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import HomeLoginModalScreen from '../components/login/HomeLoginModalScreen';
 
@@ -19,6 +20,8 @@ const HomeHeader: FC<HomeHeaderProps> = ({ isLoginSns }) => {
         setIsLoginNormal(true);
     }, []);
 
+    const isLogin = useMemo(() => isLoginNormal || isLoginSns, [isLoginNormal, isLoginSns]);
+
     const onClickLoginButton = useCallback(() => {
         if (isLoginNormal || isLoginSns) {
             push('/my-page');
@@ -31,7 +34,7 @@ const HomeHeader: FC<HomeHeaderProps> = ({ isLoginSns }) => {
         <header className="m-5 flex flex-row-reverse">
             <div>
                 <Button onClick={onClickLoginButton} variant="secondary">
-                    {isLoginSns || isLoginNormal ? '마이페이지' : '로그인 / 회원가입'}
+                    {isLogin ? '마이페이지' : '로그인 / 회원가입'}
                 </Button>
             </div>
         </header>
