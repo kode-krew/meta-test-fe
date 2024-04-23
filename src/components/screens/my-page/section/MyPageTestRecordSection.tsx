@@ -10,7 +10,7 @@ const MyPageTestRecordSection: FC<MyPageTestRecordSectionProps> = ({ isLoginSns 
     <section className="flex flex-col">
         <h1 className="text-2xl font-bold">나의 테스트 기록</h1>
         <QuizResultHistoryGraphCard isLoginSns={isLoginSns} />
-        <QuizResultRankingCard />
+        {isLoginSns ? <QuizResultRankingCard /> : null}
     </section>
 );
 
