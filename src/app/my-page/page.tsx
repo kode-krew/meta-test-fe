@@ -9,7 +9,7 @@ const MyPage = () => {
 
     return (
         <div className="flex flex-col gap-10">
-            <MyPageHeaderSection />
+            <MyPageHeaderSection isLogin={!!token} />
             <MyPageUserInformationSection isLogin={!!token} />
             <MyPageTestRecordSection isLoginSns={!!token} />
         </div>
