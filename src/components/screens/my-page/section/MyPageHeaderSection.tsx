@@ -1,9 +1,11 @@
 'use client';
 
 import { FC } from 'react';
+import { API_GET_USER_PROFILE } from '@src/api/getUserProfile';
 import Button from '@src/components/common/Button';
 import HomeIcon from '@src/components/common/Icons/HomeIcon';
 import { ToastService } from '@src/service/ToastService';
+import { useQueryClient } from '@tanstack/react-query';
 import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 
@@ -12,6 +14,7 @@ interface MyPageHeaderSectionProps {
 }
 
 const MyPageHeaderSection: FC<MyPageHeaderSectionProps> = ({ isLogin }) => {
+    const queryClient = useQueryClient();
     const toastService = ToastService.getInstance();
     const { replace, refresh } = useRouter();
     const onClickHome = () => {
@@ -19,7 +22,10 @@ const MyPageHeaderSection: FC<MyPageHeaderSectionProps> = ({ isLogin }) => {
     };
     const onClickLogout = async () => {
         await deleteCookie('refreshToken');
-        toastService.addToast('로그아웃 되었습니다.');
+        await queryClient.removeQueries({
+            queryKey: [API_GET_USER_PROFILE],
+        });
+        await toastService.addToast('로그아웃 되었습니다.');
         replace('/');
         refresh();
     };
