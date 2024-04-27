@@ -21,6 +21,7 @@ export interface HomeSignupFormValue {
     email: string;
     password: string;
     passwordConfirm: string;
+    code: number;
 }
 
 const HomeSignupScreen: FC<HomeSignupScreenProps> = ({ onSuccessLogin }) => {
@@ -32,7 +33,9 @@ const HomeSignupScreen: FC<HomeSignupScreenProps> = ({ onSuccessLogin }) => {
             email: '',
             password: '',
             passwordConfirm: '',
+            code: undefined,
         },
+        mode: 'onTouched',
     });
 
     const submitSignupForm = useMutation({
