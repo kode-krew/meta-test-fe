@@ -18,8 +18,6 @@ defaultRequest.interceptors.response.use(
         if (error.response && error.response.status === 401) {
             const refreshToken = getCookie('refreshToken');
             if (!refreshToken) {
-                await alert('로그인이 필요합니다. 로그인 해 주세요.');
-                window.location.href = '/';
                 return Promise.reject(error);
             }
 
@@ -33,8 +31,6 @@ defaultRequest.interceptors.response.use(
                     defaultRequest.defaults.headers.Authorization = `Bearer ${accessToken}`;
                     await defaultRequest.request(error.config);
                 } catch (refreshError) {
-                    alert('토큰 갱신에 실패했습니다. 재 로그인 해 주세요.');
-                    window.location.href = '/';
                     return Promise.reject(refreshError);
                 }
             }
