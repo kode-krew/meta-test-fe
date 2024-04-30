@@ -1,4 +1,6 @@
 import { FC, useState } from 'react';
+import { patchEmailVerification } from '@src/api/patchEmailVerification';
+import { postEmailVerification } from '@src/api/postEmailVerification';
 import { postLogin } from '@src/api/postLogin';
 import { postSignup } from '@src/api/postSingup';
 import defaultRequest from '@src/lib/axios/defaultRequest';
@@ -29,6 +31,14 @@ const HomeSignupScreen: FC<HomeSignupScreenProps> = ({ onSuccessLogin }) => {
     const [step, setStep] = useState<number>(1);
     const toastService = ToastService.getInstance();
     const modalService = ModalService.getInstance();
+    const [emailVerifyingRequestId, setEmailVerifyingRequestId] = useState<string>('');
+
+    const sendEmail = useMutation({
+        mutationFn: postEmailVerification,
+    });
+    const verifyEmail = useMutation({
+        mutationFn: patchEmailVerification,
+    });
 
     const methods = useForm<HomeSignupFormValue>({
         defaultValues: {
@@ -81,11 +91,41 @@ const HomeSignupScreen: FC<HomeSignupScreenProps> = ({ onSuccessLogin }) => {
     };
 
     const onClickAuthButton = () => {
-        setStep(2);
+        sendEmail.mutate(
+            {
+                email: methods.getValues('email'),
+            },
+            {
+                onSuccess: (data) => {
+                    setEmailVerifyingRequestId(data.request_id);
+                    setStep(2);
+                },
+                onError: (error) => {
+                    if (error && isAxiosError(error)) {
+                        toastService.addToast(error.response?.data.message);
+                    }
+                },
+            },
+        );
     };
 
     const onClickVerifyingButton = () => {
-        setStep(3);
+        verifyEmail.mutate(
+            {
+                code: Number(methods.getValues('code')),
+                request_id: emailVerifyingRequestId,
+            },
+            {
+                onSuccess: () => {
+                    setStep(3);
+                },
+                onError: (error) => {
+                    if (error && isAxiosError(error)) {
+                        toastService.addToast(error.response?.data.message);
+                    }
+                },
+            },
+        );
     };
 
     return (

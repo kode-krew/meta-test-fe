@@ -8,3 +8,7 @@ export interface UserInformationResponse {
     age?: number;
     userType: UserAccountType;
 }
+
+export interface PostEmailVerificationResponse {
+    request_id: string;
+}
