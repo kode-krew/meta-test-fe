@@ -16,10 +16,6 @@ import HomeSignupPasswordConfirm from './HomeSignupPasswordConfirm';
 import HomeSignupVerifyingCode from './HomeSignupVerifyingCode';
 import HomeSingupEmail from './HomeSingupEmail';
 
-interface HomeSignupScreenProps {
-    onSuccessLogin: VoidFunction;
-}
-
 export interface HomeSignupFormValue {
     email: string;
     password: string;
@@ -27,7 +23,7 @@ export interface HomeSignupFormValue {
     code: number;
 }
 
-const HomeSignupScreen: FC<HomeSignupScreenProps> = ({ onSuccessLogin }) => {
+const HomeSignupScreen: FC = () => {
     const [step, setStep] = useState<number>(1);
     const toastService = ToastService.getInstance();
     const modalService = ModalService.getInstance();
@@ -62,7 +58,6 @@ const HomeSignupScreen: FC<HomeSignupScreenProps> = ({ onSuccessLogin }) => {
                 const refreshToken = data.headers.refresh_token;
                 defaultRequest.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
                 await setCookie('refreshToken', refreshToken);
-                onSuccessLogin();
             }
         },
     });
