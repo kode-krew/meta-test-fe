@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { QuizDifficulty, getRandomQuizList } from '@src/lib/quiz/getRandomQuizList';
+import { getRandomQuizList } from '@src/lib/quiz/getRandomQuizList';
 import { QuizListService } from '@src/service/QuizListService';
+import { QuizDifficulty } from '@src/types/api/tests';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Autoplay, EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
@@ -9,14 +10,6 @@ import QuizCard from './QuizCard';
 interface QuizSwiperProps {
     count: number;
 }
-
-const mock = Array.from({ length: 5 }).map((_, index) => ({ id: index, value: index.toString() }));
-const isTypeOfDifficulty = (value: string) => {
-    if (value) {
-        return true;
-    }
-    return false;
-};
 
 const QuizSwiper: FC<QuizSwiperProps> = ({ count }) => {
     const quizListService = QuizListService.getInstance();

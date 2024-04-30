@@ -15,20 +15,24 @@ const HomeHeader: FC<HomeHeaderProps> = ({ isLoginSns }) => {
     const { push } = useRouter();
     const modalService = ModalService.getInstance();
     const [isLoginNormal, setIsLoginNormal] = useState(false);
+    const token = getCookie('refreshToken');
 
     const onSuccessLogin = useCallback(() => {
         setIsLoginNormal(true);
     }, []);
 
-    const isLogin = useMemo(() => isLoginNormal || isLoginSns, [isLoginNormal, isLoginSns]);
+    const isLogin = useMemo(
+        () => (isLoginNormal && !!token) || (isLoginSns && !!token),
+        [isLoginNormal, isLoginSns, token],
+    );
 
     const onClickLoginButton = useCallback(() => {
-        if (isLoginNormal || isLoginSns) {
+        if (isLogin) {
             push('/my-page');
             return;
         }
         modalService.openModal(<HomeLoginModalScreen onSuccessLogin={onSuccessLogin} />);
-    }, [isLoginNormal, isLoginSns, modalService, onSuccessLogin, push]);
+    }, [isLogin, modalService, onSuccessLogin, push]);
 
     return (
         <header className="m-5 flex flex-row-reverse">
