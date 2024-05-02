@@ -5,8 +5,8 @@ import { ModalService } from '@src/service/ModalService';
 import { ToastService } from '@src/service/ToastService';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
-import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
+import { useCookies } from 'react-cookie';
 import { FormProvider, useForm } from 'react-hook-form';
 import MyPagePasswordEditNewPasswordConfirmInput from './MyPagePasswordEditNewPasswordConfirmInput';
 import MyPagePasswordEditNewPasswordInput from './MyPagePasswordEditNewPasswordInput';
@@ -20,6 +20,7 @@ export interface MyPagePasswordEditForm {
 }
 
 const MyPagePasswordEditModalScreen: FC<MyPagePasswordEditModalScreenProps> = () => {
+    const [, , removeCookies] = useCookies();
     const { replace } = useRouter();
     const toastService = ToastService.getInstance();
     const modalService = ModalService.getInstance();
@@ -44,7 +45,7 @@ const MyPagePasswordEditModalScreen: FC<MyPagePasswordEditModalScreenProps> = ()
             { password },
             {
                 onSuccess: async () => {
-                    await deleteCookie('refreshToken');
+                    await removeCookies('refreshToken');
                     await modalService.closeEntireModal();
                     await toastService.addToast('비밀번호가 변경 되었습니다. 재로그인 해 주세요.');
                     replace('/');

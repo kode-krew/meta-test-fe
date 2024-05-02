@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import GoogleIcon from 'public/my-page/google-login.png';
 import KakaoIcon from 'public/my-page/kakao-login.png';
-import MyPageInformationEditModalScreen from '../components/MyPageInformationEditModalScreen';
+import MyPageInformationEditModalScreen from '../components/MyPageInformationEdit/MyPageInformationEditModalScreen';
 import MyPagePasswordEditModalScreen from '../components/MyPagePasswordEdit/MyPagePasswordEditModalScreen';
 
 interface MyPageUserInformationSectionProps {

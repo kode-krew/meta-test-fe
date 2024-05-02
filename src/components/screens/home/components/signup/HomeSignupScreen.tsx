@@ -3,17 +3,17 @@ import { patchEmailVerification } from '@src/api/patchEmailVerification';
 import { postEmailVerification } from '@src/api/postEmailVerification';
 import { postLogin } from '@src/api/postLogin';
 import { postSignup } from '@src/api/postSingup';
+import EmailVerifyingCode from '@src/components/common/EmailVerifyingCode';
 import defaultRequest from '@src/lib/axios/defaultRequest';
 import { ModalService } from '@src/service/ModalService';
 import { ToastService } from '@src/service/ToastService';
 import { useMutation } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
-import { setCookie } from 'cookies-next';
+import { useCookies } from 'react-cookie';
 import { FormProvider, useForm } from 'react-hook-form';
 import HomeSignupButton from './HomeSignupButton';
 import HomeSignupPassword from './HomeSignupPassword';
 import HomeSignupPasswordConfirm from './HomeSignupPasswordConfirm';
-import HomeSignupVerifyingCode from './HomeSignupVerifyingCode';
 import HomeSingupEmail from './HomeSingupEmail';
 
 export interface HomeSignupFormValue {
@@ -24,6 +24,7 @@ export interface HomeSignupFormValue {
 }
 
 const HomeSignupScreen: FC = () => {
+    const [, setCookie] = useCookies(['refreshToken']);
     const [step, setStep] = useState<number>(1);
     const toastService = ToastService.getInstance();
     const modalService = ModalService.getInstance();
@@ -134,9 +135,7 @@ const HomeSignupScreen: FC = () => {
                     <HomeSingupEmail onClickAuthButton={onClickAuthButton} />
                     {step > 1 && (
                         <div className="animate-slideup">
-                            <HomeSignupVerifyingCode
-                                onClickVerifyingButton={onClickVerifyingButton}
-                            />
+                            <EmailVerifyingCode onClickVerifyingButton={onClickVerifyingButton} />
                         </div>
                     )}
                     {step > 2 && (

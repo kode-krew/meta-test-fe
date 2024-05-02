@@ -3,18 +3,17 @@ import { ErrorMessage } from '@hookform/error-message';
 import Button from '@src/components/common/Button';
 import CommonInput from '@src/components/common/CommonInput';
 import { useFormContext, useWatch } from 'react-hook-form';
-import type { HomeSignupFormValue } from './HomeSignupScreen';
 
-interface HomeSignupVerifyingCodeProps {
+interface EmailVerifyingCodeProps {
     onClickVerifyingButton: MouseEventHandler<HTMLButtonElement>;
 }
 
-const HomeSignupVerifyingCode: FC<HomeSignupVerifyingCodeProps> = ({ onClickVerifyingButton }) => {
+const EmailVerifyingCode: FC<EmailVerifyingCodeProps> = ({ onClickVerifyingButton }) => {
     const {
         register,
         formState: { errors },
         control,
-    } = useFormContext<HomeSignupFormValue>();
+    } = useFormContext();
     const code = useWatch({
         control,
         name: 'code',
@@ -57,4 +56,4 @@ const HomeSignupVerifyingCode: FC<HomeSignupVerifyingCodeProps> = ({ onClickVeri
     );
 };
 
-export default HomeSignupVerifyingCode;
+export default EmailVerifyingCode;
