@@ -16,7 +16,7 @@ interface MyPageHeaderSectionProps {
 const MyPageHeaderSection: FC<MyPageHeaderSectionProps> = ({ isLogin }) => {
     const queryClient = useQueryClient();
     const toastService = ToastService.getInstance();
-    const { replace, refresh } = useRouter();
+    const { replace } = useRouter();
     const onClickHome = () => {
         replace('/');
     };
@@ -27,7 +27,6 @@ const MyPageHeaderSection: FC<MyPageHeaderSectionProps> = ({ isLogin }) => {
         });
         await toastService.addToast('로그아웃 되었습니다.');
         replace('/');
-        refresh();
     };
 
     return (

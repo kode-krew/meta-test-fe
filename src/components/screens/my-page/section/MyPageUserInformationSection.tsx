@@ -11,7 +11,7 @@ import Image from 'next/image';
 import GoogleIcon from 'public/my-page/google-login.png';
 import KakaoIcon from 'public/my-page/kakao-login.png';
 import MyPageInformationEditModalScreen from '../components/MyPageInformationEditModalScreen';
-import MyPagePasswordEditModalScreen from '../components/MyPagePasswordEditModalScreen';
+import MyPagePasswordEditModalScreen from '../components/MyPagePasswordEdit/MyPagePasswordEditModalScreen';
 
 interface MyPageUserInformationSectionProps {
     isLogin: boolean;
@@ -54,11 +54,16 @@ const MyPageUserInformationSection: FC<MyPageUserInformationSectionProps> = ({ i
                 </section>
                 {isLogin ? (
                     <section className="flex gap-2">
-                        <div className="w-max">
-                            <RoundedButton variant="secondary" onClick={onClickEditPasswordButton}>
-                                비밀번호변경
-                            </RoundedButton>
-                        </div>
+                        {userInformation.data?.userType === 'NORMAL' ? (
+                            <div className="w-max">
+                                <RoundedButton
+                                    variant="secondary"
+                                    onClick={onClickEditPasswordButton}
+                                >
+                                    비밀번호변경
+                                </RoundedButton>
+                            </div>
+                        ) : null}
                         <div className="w-max">
                             <RoundedButton variant="primary" onClick={onClickEditInformationButton}>
                                 수정
@@ -69,26 +74,26 @@ const MyPageUserInformationSection: FC<MyPageUserInformationSectionProps> = ({ i
             </header>
             <main className="flex flex-col gap-4 px-3 py-5 shadow-md">
                 <section className="flex w-full items-center justify-between">
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-3">
                         <span className="max-w-fit phoneXs:text-xs">이메일</span>
                         <span className="max-w-fit phoneXs:text-xs">
                             {userInformation.data?.email}
                         </span>
                     </div>
                     <div>
-                        {userInformation?.data?.userType !== 'NORMAL' ? (
-                            <div className="flex h-full max-h-5 w-full max-w-5  border-amber-300">
+                        {userInformation.data && userInformation.data?.userType !== 'NORMAL' ? (
+                            <div className="flex h-full max-h-7 w-full max-w-7  border-amber-300">
                                 <Image
-                                    src={getSocialIcon(userInformation?.data?.userType ?? 'GOOGLE')}
-                                    alt=""
+                                    src={getSocialIcon(userInformation.data.userType)}
+                                    alt="소셜 로그인 아이콘"
                                 />
                             </div>
                         ) : null}
                     </div>
                 </section>
                 {userInformation.data?.nickname ? (
-                    <section className="flex">
-                        <span className="w-44">닉네임</span>
+                    <section className="flex gap-3">
+                        <span className="max-w-fit">닉네임</span>
                         <span>{userInformation.data?.nickname}</span>
                     </section>
                 ) : null}

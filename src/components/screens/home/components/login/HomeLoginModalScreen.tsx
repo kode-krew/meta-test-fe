@@ -5,20 +5,8 @@ import { setCookie } from 'cookies-next';
 import { usePathname } from 'next/navigation';
 import HomeBasicLoginSection from './HomeBasicLoginSection';
 
-interface HomeLoginModalScreenProps {
-    onSuccessLogin: VoidFunction;
-}
-
-type SocialType = 'google' | 'kakao';
-
-const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = ({ onSuccessLogin }) => {
+const HomeLoginModalScreen: FC = () => {
     const pathName = usePathname();
-    const onClickSnsLogin = (socialType: SocialType) => {
-        setCookie('social-login-info', {
-            loginPath: pathName,
-            socialType,
-        });
-    };
 
     return (
         <div
@@ -32,7 +20,10 @@ const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = ({ onSuccessLogin })
                     <button
                         type="button"
                         onClick={() => {
-                            onClickSnsLogin('google');
+                            setCookie('social-login-info', {
+                                loginPath: pathName,
+                                socialType: 'google',
+                            });
                         }}
                         className="flex h-10 w-full  items-center gap-2 rounded-md bg-slate-200 p-3"
                     >
@@ -44,7 +35,10 @@ const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = ({ onSuccessLogin })
                     <button
                         type="button"
                         onClick={() => {
-                            onClickSnsLogin('kakao');
+                            setCookie('social-login-info', {
+                                loginPath: pathName,
+                                socialType: 'kakao',
+                            });
                         }}
                         className="flex h-10 w-full  items-center gap-2 rounded-md bg-yellow-300 p-3"
                     >
@@ -54,7 +48,7 @@ const HomeLoginModalScreen: FC<HomeLoginModalScreenProps> = ({ onSuccessLogin })
                 </a>
             </section>
             <hr className="mt-4 h-px border-none bg-violet-400" />
-            <HomeBasicLoginSection onSuccessLogin={onSuccessLogin} />
+            <HomeBasicLoginSection />
         </div>
     );
 };
