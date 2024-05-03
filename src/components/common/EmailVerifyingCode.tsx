@@ -6,9 +6,13 @@ import { useFormContext, useWatch } from 'react-hook-form';
 
 interface EmailVerifyingCodeProps {
     onClickVerifyingButton: MouseEventHandler<HTMLButtonElement>;
+    isSuccessAuthorization: boolean;
 }
 
-const EmailVerifyingCode: FC<EmailVerifyingCodeProps> = ({ onClickVerifyingButton }) => {
+const EmailVerifyingCode: FC<EmailVerifyingCodeProps> = ({
+    onClickVerifyingButton,
+    isSuccessAuthorization,
+}) => {
     const {
         register,
         formState: { errors },
@@ -27,6 +31,7 @@ const EmailVerifyingCode: FC<EmailVerifyingCodeProps> = ({ onClickVerifyingButto
                     placeholder="인증 코드 입력"
                     inputMode="numeric"
                     maxLength={4}
+                    disabled={isSuccessAuthorization}
                     {...register('code', {
                         required: true,
                         validate: {
@@ -42,14 +47,14 @@ const EmailVerifyingCode: FC<EmailVerifyingCodeProps> = ({ onClickVerifyingButto
                     render={({ message }) => <span className="text-red-600">{message}</span>}
                 />
             </div>
-            <div className="w-1/5">
+            <div className="h-10 w-40">
                 <Button
                     type="button"
                     variant="blue"
                     onClick={onClickVerifyingButton}
-                    disabled={!code}
+                    disabled={!code || isSuccessAuthorization}
                 >
-                    인증
+                    {isSuccessAuthorization ? '인증 완료' : '인증 하기'}
                 </Button>
             </div>
         </section>

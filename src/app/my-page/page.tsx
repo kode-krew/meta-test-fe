@@ -1,10 +1,10 @@
 import MyPageHeaderSection from '@src/components/screens/my-page/section/MyPageHeaderSection';
 import MyPageTestRecordSection from '@src/components/screens/my-page/section/MyPageTestRecordSection';
 import MyPageUserInformationSection from '@src/components/screens/my-page/section/MyPageUserInformationSection';
-import { Cookies, useCookies } from 'react-cookie';
+import { cookies } from 'next/headers';
 
 const MyPage = () => {
-    const cookie = new Cookies();
+    const cookie = cookies();
 
     return (
         <div className="flex flex-col gap-10">

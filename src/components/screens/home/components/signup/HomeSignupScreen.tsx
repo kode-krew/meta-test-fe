@@ -94,6 +94,7 @@ const HomeSignupScreen: FC = () => {
             {
                 onSuccess: (data) => {
                     setEmailVerifyingRequestId(data.request_id);
+                    toastService.addToast('코드가 이메일로 발송되었습니다.');
                     setStep(2);
                 },
                 onError: (error) => {
@@ -113,6 +114,7 @@ const HomeSignupScreen: FC = () => {
             },
             {
                 onSuccess: () => {
+                    toastService.addToast('인증이 완료되었습니다.');
                     setStep(3);
                 },
                 onError: (error) => {
@@ -132,10 +134,16 @@ const HomeSignupScreen: FC = () => {
             >
                 <p className="text-2xl font-bold">회원가입</p>
                 <section className="mt-5 flex flex-col gap-6">
-                    <HomeSingupEmail onClickAuthButton={onClickAuthButton} />
+                    <HomeSingupEmail
+                        onClickAuthButton={onClickAuthButton}
+                        isSuccessAuthorization={step > 2}
+                    />
                     {step > 1 && (
                         <div className="animate-slideup">
-                            <EmailVerifyingCode onClickVerifyingButton={onClickVerifyingButton} />
+                            <EmailVerifyingCode
+                                onClickVerifyingButton={onClickVerifyingButton}
+                                isSuccessAuthorization={step > 2}
+                            />
                         </div>
                     )}
                     {step > 2 && (

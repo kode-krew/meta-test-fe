@@ -22,7 +22,7 @@ const useSocialLogin = () => {
     const socialInfo = getCookie['social-login-info'];
 
     const socialInfoObj: SocialLoginInformationType = useMemo(() => {
-        if (socialInfo) return JSON.parse(socialInfo);
+        if (socialInfo) return socialInfo;
         return null;
     }, [socialInfo]);
 
@@ -49,7 +49,7 @@ const useSocialLogin = () => {
             }
         }
         kakaoLoginProcess();
-    }, [kakaoLogin.data, push, setCookie, socialInfoObj.loginPath, toastService]);
+    }, [kakaoLogin.data, push, setCookie, socialInfoObj?.loginPath, toastService]);
     useEffect(() => {
         async function googleLoginProcess() {
             if (googleLogin.data) {
@@ -62,7 +62,7 @@ const useSocialLogin = () => {
             }
         }
         googleLoginProcess();
-    }, [googleLogin.data, push, setCookie, socialInfoObj.loginPath, toastService]);
+    }, [googleLogin.data, push, setCookie, socialInfoObj?.loginPath, toastService]);
 };
 
 export default useSocialLogin;

@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { ErrorMessage } from '@hookform/error-message';
 import CommonInput from '@src/components/common/CommonInput';
+import { passwordRegex } from '@src/lib/regex';
 import { useFormContext, useWatch } from 'react-hook-form';
 import type { HomeSignupFormValue } from './HomeSignupScreen';
 
@@ -11,7 +12,6 @@ const HomeSignupPassword: FC<HomeSignupPasswordProps> = () => {
         register,
         formState: { errors },
     } = useFormContext<HomeSignupFormValue>();
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
 
     return (
         <section className="flex flex-col">
