@@ -7,7 +7,7 @@ import { ModalService } from '@src/service/ModalService';
 import { ToastService } from '@src/service/ToastService';
 import { useMutation } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
-import { setCookie } from 'cookies-next';
+import { useCookies } from 'react-cookie';
 import { FormProvider, useForm } from 'react-hook-form';
 import HomeBasicLoginEmailInput from './HomeBasicLoginEmailInput';
 import HomeBasicLoginPasswordInput from './HomeBasicLoginPasswordInput';
@@ -21,6 +21,7 @@ export interface HomeBasicLoginFormValue {
 }
 
 const HomeBasicLoginSection: FC = () => {
+    const [, setCookie] = useCookies(['refreshToken']);
     const modalService = ModalService.getInstance();
     const toastService = ToastService.getInstance();
     const login = useMutation({

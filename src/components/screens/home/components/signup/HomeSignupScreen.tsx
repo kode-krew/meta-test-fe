@@ -3,17 +3,17 @@ import { patchEmailVerification } from '@src/api/patchEmailVerification';
 import { postEmailVerification } from '@src/api/postEmailVerification';
 import { postLogin } from '@src/api/postLogin';
 import { postSignup } from '@src/api/postSingup';
+import EmailVerifyingCode from '@src/components/common/EmailVerifyingCode';
 import defaultRequest from '@src/lib/axios/defaultRequest';
 import { ModalService } from '@src/service/ModalService';
 import { ToastService } from '@src/service/ToastService';
 import { useMutation } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
-import { setCookie } from 'cookies-next';
+import { useCookies } from 'react-cookie';
 import { FormProvider, useForm } from 'react-hook-form';
 import HomeSignupButton from './HomeSignupButton';
 import HomeSignupPassword from './HomeSignupPassword';
 import HomeSignupPasswordConfirm from './HomeSignupPasswordConfirm';
-import HomeSignupVerifyingCode from './HomeSignupVerifyingCode';
 import HomeSingupEmail from './HomeSingupEmail';
 
 export interface HomeSignupFormValue {
@@ -24,6 +24,7 @@ export interface HomeSignupFormValue {
 }
 
 const HomeSignupScreen: FC = () => {
+    const [, setCookie] = useCookies(['refreshToken']);
     const [step, setStep] = useState<number>(1);
     const toastService = ToastService.getInstance();
     const modalService = ModalService.getInstance();
@@ -93,6 +94,7 @@ const HomeSignupScreen: FC = () => {
             {
                 onSuccess: (data) => {
                     setEmailVerifyingRequestId(data.request_id);
+                    toastService.addToast('코드가 이메일로 발송되었습니다.');
                     setStep(2);
                 },
                 onError: (error) => {
@@ -112,6 +114,7 @@ const HomeSignupScreen: FC = () => {
             },
             {
                 onSuccess: () => {
+                    toastService.addToast('인증이 완료되었습니다.');
                     setStep(3);
                 },
                 onError: (error) => {
@@ -131,11 +134,15 @@ const HomeSignupScreen: FC = () => {
             >
                 <p className="text-2xl font-bold">회원가입</p>
                 <section className="mt-5 flex flex-col gap-6">
-                    <HomeSingupEmail onClickAuthButton={onClickAuthButton} />
+                    <HomeSingupEmail
+                        onClickAuthButton={onClickAuthButton}
+                        isSuccessAuthorization={step > 2}
+                    />
                     {step > 1 && (
                         <div className="animate-slideup">
-                            <HomeSignupVerifyingCode
+                            <EmailVerifyingCode
                                 onClickVerifyingButton={onClickVerifyingButton}
+                                isSuccessAuthorization={step > 2}
                             />
                         </div>
                     )}

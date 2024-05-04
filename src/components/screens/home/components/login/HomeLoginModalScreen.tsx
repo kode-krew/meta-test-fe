@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
 import GoogleIcon from '@src/components/common/Icons/GoogleIcon';
 import KakaoIcon from '@src/components/common/Icons/KakaoIcon';
-import { setCookie } from 'cookies-next';
 import { usePathname } from 'next/navigation';
+import { useCookies } from 'react-cookie';
 import HomeBasicLoginSection from './HomeBasicLoginSection';
 
 const HomeLoginModalScreen: FC = () => {
     const pathName = usePathname();
+    const [, setCookie] = useCookies(['social-login-info']);
 
     return (
         <div

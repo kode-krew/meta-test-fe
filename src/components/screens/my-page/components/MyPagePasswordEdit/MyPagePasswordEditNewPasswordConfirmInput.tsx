@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { ErrorMessage } from '@hookform/error-message';
 import CommonInput from '@src/components/common/CommonInput';
+import { passwordRegex } from '@src/lib/regex';
 import { useFormContext, useWatch } from 'react-hook-form';
 import type { MyPagePasswordEditForm } from './MyPagePasswordEditModalScreen';
 
@@ -16,7 +17,6 @@ const MyPagePasswordEditNewPasswordConfirmInput: FC<
     } = useFormContext<MyPagePasswordEditForm>();
 
     const password = useWatch({ control, name: 'password' });
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
 
     const validatePassword = (value: string) => {
         if (password && value !== password) {

@@ -6,14 +6,15 @@ import Button from '@src/components/common/Button';
 import HomeIcon from '@src/components/common/Icons/HomeIcon';
 import { ToastService } from '@src/service/ToastService';
 import { useQueryClient } from '@tanstack/react-query';
-import { deleteCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
+import { useCookies } from 'react-cookie';
 
 interface MyPageHeaderSectionProps {
     isLogin: boolean;
 }
 
 const MyPageHeaderSection: FC<MyPageHeaderSectionProps> = ({ isLogin }) => {
+    const [, , removeCookies] = useCookies(['refreshToken']);
     const queryClient = useQueryClient();
     const toastService = ToastService.getInstance();
     const { replace } = useRouter();
@@ -21,7 +22,7 @@ const MyPageHeaderSection: FC<MyPageHeaderSectionProps> = ({ isLogin }) => {
         replace('/');
     };
     const onClickLogout = async () => {
-        await deleteCookie('refreshToken');
+        await removeCookies('refreshToken');
         await queryClient.removeQueries({
             queryKey: [API_GET_USER_PROFILE],
         });

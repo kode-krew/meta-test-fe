@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { API_GET_GOOGLE_LOGIN, getGoogleLogin } from '@src/api/getGoogleLogin';
 import { API_GET_KAKAKO_LOGIN, getKakaoLogin } from '@src/api/getKakaoLogin';
 import defaultRequest from '@src/lib/axios/defaultRequest';
 import { ToastService } from '@src/service/ToastService';
 import { useQuery } from '@tanstack/react-query';
-import { getCookie, setCookie } from 'cookies-next';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useCookies } from 'react-cookie';
 
 export type SocialType = 'google' | 'kakao';
 export interface SocialLoginInformationType {
@@ -14,14 +14,15 @@ export interface SocialLoginInformationType {
 }
 
 const useSocialLogin = () => {
+    const [getCookie, setCookie] = useCookies(['social-login-info', 'refreshToken']);
     const { push } = useRouter();
     const { get } = useSearchParams();
     const toastService = ToastService.getInstance();
     const code = get('code');
-    const socialInfo = getCookie('social-login-info');
+    const socialInfo = getCookie['social-login-info'];
 
     const socialInfoObj: SocialLoginInformationType = useMemo(() => {
-        if (socialInfo) return JSON.parse(socialInfo);
+        if (socialInfo) return socialInfo;
         return null;
     }, [socialInfo]);
 
@@ -48,7 +49,7 @@ const useSocialLogin = () => {
             }
         }
         kakaoLoginProcess();
-    }, [kakaoLogin.data, push, socialInfoObj?.loginPath, toastService]);
+    }, [kakaoLogin.data, push, setCookie, socialInfoObj?.loginPath, toastService]);
     useEffect(() => {
         async function googleLoginProcess() {
             if (googleLogin.data) {
@@ -61,7 +62,7 @@ const useSocialLogin = () => {
             }
         }
         googleLoginProcess();
-    }, [googleLogin.data, push, socialInfoObj?.loginPath, toastService]);
+    }, [googleLogin.data, push, setCookie, socialInfoObj?.loginPath, toastService]);
 };
 
 export default useSocialLogin;

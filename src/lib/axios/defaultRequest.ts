@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCookie } from 'cookies-next';
+import { Cookies, useCookies } from 'react-cookie';
 
 const defaultRequest = axios.create({
     baseURL: process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL,
@@ -12,11 +12,12 @@ const defaultRequest = axios.create({
 let retryCount = 0; // 재시도 횟수 추적 변수
 const maxRetries = 1; // 최대 재시도 횟수
 
+const cookies = new Cookies();
 defaultRequest.interceptors.response.use(
     async (response) => response,
     async (error) => {
         if (error.response && error.response.status === 401) {
-            const refreshToken = getCookie('refreshToken');
+            const refreshToken = cookies.get('refreshToken');
             if (!refreshToken) {
                 return Promise.reject(error);
             }

@@ -3,14 +3,15 @@
 import React, { FC, useCallback, useMemo } from 'react';
 import Button from '@src/components/common/Button';
 import { ModalService } from '@src/service/ModalService';
-import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
+import { useCookies } from 'react-cookie';
 import HomeLoginModalScreen from '../components/login/HomeLoginModalScreen';
 
 const HomeHeaderButton: FC = () => {
+    const [cookie] = useCookies(['refreshToken']);
     const { push } = useRouter();
     const modalService = ModalService.getInstance();
-    const token = getCookie('refreshToken');
+    const token = cookie.refreshToken;
 
     const isLogin = useMemo(() => !!token, [token]);
 

@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { ErrorMessage } from '@hookform/error-message';
 import CommonInput from '@src/components/common/CommonInput';
+import { passwordRegex } from '@src/lib/regex';
 import { useFormContext } from 'react-hook-form';
 import type { MyPagePasswordEditForm } from './MyPagePasswordEditModalScreen';
 
@@ -11,7 +12,6 @@ const MyPagePasswordEditNewPasswordInput: FC<MyPagePasswordEditNewPasswordInputP
         register,
         formState: { errors },
     } = useFormContext<MyPagePasswordEditForm>();
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
 
     return (
         <>

@@ -3,18 +3,21 @@ import { ErrorMessage } from '@hookform/error-message';
 import Button from '@src/components/common/Button';
 import CommonInput from '@src/components/common/CommonInput';
 import { useFormContext, useWatch } from 'react-hook-form';
-import type { HomeSignupFormValue } from './HomeSignupScreen';
 
-interface HomeSignupVerifyingCodeProps {
+interface EmailVerifyingCodeProps {
     onClickVerifyingButton: MouseEventHandler<HTMLButtonElement>;
+    isSuccessAuthorization: boolean;
 }
 
-const HomeSignupVerifyingCode: FC<HomeSignupVerifyingCodeProps> = ({ onClickVerifyingButton }) => {
+const EmailVerifyingCode: FC<EmailVerifyingCodeProps> = ({
+    onClickVerifyingButton,
+    isSuccessAuthorization,
+}) => {
     const {
         register,
         formState: { errors },
         control,
-    } = useFormContext<HomeSignupFormValue>();
+    } = useFormContext();
     const code = useWatch({
         control,
         name: 'code',
@@ -28,6 +31,7 @@ const HomeSignupVerifyingCode: FC<HomeSignupVerifyingCodeProps> = ({ onClickVeri
                     placeholder="인증 코드 입력"
                     inputMode="numeric"
                     maxLength={4}
+                    disabled={isSuccessAuthorization}
                     {...register('code', {
                         required: true,
                         validate: {
@@ -43,18 +47,18 @@ const HomeSignupVerifyingCode: FC<HomeSignupVerifyingCodeProps> = ({ onClickVeri
                     render={({ message }) => <span className="text-red-600">{message}</span>}
                 />
             </div>
-            <div className="w-1/5">
+            <div className="h-10 w-40">
                 <Button
                     type="button"
                     variant="blue"
                     onClick={onClickVerifyingButton}
-                    disabled={!code}
+                    disabled={!code || isSuccessAuthorization}
                 >
-                    인증
+                    {isSuccessAuthorization ? '인증 완료' : '인증 하기'}
                 </Button>
             </div>
         </section>
     );
 };
 
-export default HomeSignupVerifyingCode;
+export default EmailVerifyingCode;

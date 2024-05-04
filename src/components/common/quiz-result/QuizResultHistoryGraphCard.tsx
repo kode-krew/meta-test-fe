@@ -4,6 +4,7 @@ import { FC, useMemo, useState } from 'react';
 import SelectBox, { SelectBoxOptionType } from '@src/components/common/SelectBox';
 import HomeLoginModalScreen from '@src/components/screens/home/components/login/HomeLoginModalScreen';
 import { ModalService } from '@src/service/ModalService';
+import { useCookies } from 'react-cookie';
 import QuizResultBarChart from './QuizResultBarChart';
 
 interface QuizResultHistoryGraphCardProps {
@@ -13,17 +14,14 @@ interface QuizResultHistoryGraphCardProps {
 const options: SelectBoxOptionType[] = [{ id: 'all', label: '전체' }];
 
 const QuizResultHistoryGraphCard: FC<QuizResultHistoryGraphCardProps> = ({ isLoginSns }) => {
-    const [isLoginNormal, setIsLoginNormal] = useState(false);
     const modalService = ModalService.getInstance();
+    const [token] = useCookies(['refreshToken']);
 
-    const onSuccessLogin = () => {
-        setIsLoginNormal(true);
-    };
     const onClickLoginButton = () => {
-        modalService.openModal(<HomeLoginModalScreen onSuccessLogin={onSuccessLogin} />);
+        modalService.openModal(<HomeLoginModalScreen />);
     };
 
-    const isLogin = useMemo(() => isLoginSns || isLoginNormal, [isLoginNormal, isLoginSns]);
+    const isLogin = useMemo(() => !!token, [token]);
 
     return (
         <section className="relative mt-3 w-full rounded-md border border-none p-5 shadow-md">
