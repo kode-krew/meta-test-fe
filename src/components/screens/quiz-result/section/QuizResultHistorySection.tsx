@@ -28,7 +28,6 @@ const QuizResultHistorySection: FC<QuizResultHistorySectionProps> = ({ isLoginSn
                 )}
             </div>
             <QuizResultHistoryGraphCard isLoginSns={isLoginSns} />
-            {isLoginSns && <QuizResultRankingCard />}
         </section>
     );
 };

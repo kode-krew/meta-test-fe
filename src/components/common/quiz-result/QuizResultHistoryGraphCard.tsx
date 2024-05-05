@@ -1,9 +1,12 @@
 'use client';
 
 import { FC, useMemo, useState } from 'react';
+import { API_GET_USER_PROFILE, getUserProfile } from '@src/api/getUserProfile';
+import { API_GET_USER_TEST_LIST, getUserTestList } from '@src/api/getUserTestList';
 import SelectBox, { SelectBoxOptionType } from '@src/components/common/SelectBox';
 import HomeLoginModalScreen from '@src/components/screens/home/components/login/HomeLoginModalScreen';
 import { ModalService } from '@src/service/ModalService';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useCookies } from 'react-cookie';
 import QuizResultBarChart from './QuizResultBarChart';
 
@@ -13,7 +16,26 @@ interface QuizResultHistoryGraphCardProps {
 
 const options: SelectBoxOptionType[] = [{ id: 'all', label: '전체' }];
 
-const QuizResultHistoryGraphCard: FC<QuizResultHistoryGraphCardProps> = ({ isLoginSns }) => {
+const QuizResultHistoryGraphCard: FC<QuizResultHistoryGraphCardProps> = () => {
+    const { data: userData } = useQuery({
+        queryKey: [API_GET_USER_PROFILE],
+        queryFn: () => getUserProfile(),
+    });
+    const { data } = useInfiniteQuery({
+        queryKey: [API_GET_USER_TEST_LIST, { level: 'all' }],
+        queryFn: ({ pageParam }) =>
+            getUserTestList({
+                id: userData?.id ?? '',
+                limit: 1,
+                level: 'all',
+                order: 'desc',
+                startKey: pageParam || undefined,
+            }),
+        initialPageParam: '',
+        getNextPageParam: (lastPage) => lastPage.lastEvaluatedKey ?? undefined,
+        enabled: !!userData?.id,
+        staleTime: 0,
+    });
     const modalService = ModalService.getInstance();
     const [token] = useCookies(['refreshToken']);
 
