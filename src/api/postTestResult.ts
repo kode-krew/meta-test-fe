@@ -1,10 +1,9 @@
 import defaultRequest from '@src/lib/axios/defaultRequest';
-import { QuizTestLevel } from '@src/types/api/test';
-import { PostTestResultResponse } from '@src/types/api/tests';
+import { PostTestResultResponse, QuizTestLevel } from '@src/types/api/test';
 import { ApiHandler } from '../types/common/api';
 
 export interface PostTestResultBody {
-    id: string;
+    id?: string;
     level: QuizTestLevel;
     total_count: number;
     expected_count: number;
@@ -15,6 +14,6 @@ export interface PostTestResultBody {
 export const postTestResult: ApiHandler<PostTestResultResponse, PostTestResultBody> = async (
     body,
 ) => {
-    const { data } = await defaultRequest.post('/test', { body });
+    const { data } = await defaultRequest.post('/test', { ...body });
     return data;
 };

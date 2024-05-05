@@ -14,7 +14,7 @@ export interface GetUserTestResponse {
     sort_key: string;
 }
 
-export interface PostResultTestResponse {
+export interface PostTestResultResponse {
     id: string;
     sort_key: string;
 }

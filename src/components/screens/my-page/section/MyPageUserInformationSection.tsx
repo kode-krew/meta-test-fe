@@ -72,7 +72,7 @@ const MyPageUserInformationSection: FC<MyPageUserInformationSectionProps> = ({ i
                     </section>
                 ) : null}
             </header>
-            <main className="flex flex-col gap-4 px-3 py-5 shadow-md">
+            <main className="flex h-28 flex-col gap-4 px-3 py-5 shadow-md">
                 <section className="flex w-full items-center justify-between">
                     <div className="flex items-center gap-3">
                         <span className="max-w-fit phoneXs:text-xs">이메일</span>

@@ -1,7 +1,7 @@
 export type UserAccountType = 'NORMAL' | 'KAKAO' | 'GOOGLE';
 
 export interface UserInformationResponse {
-    Id?: string;
+    id?: string;
     email: string;
     nickname?: string;
     gender?: string;
