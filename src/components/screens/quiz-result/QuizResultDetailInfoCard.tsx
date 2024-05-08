@@ -14,35 +14,36 @@ const QuizResultDetailInfoCard: FC<QuizResultDetailInfoCardProps> = () => {
     const id = queryParams.get('id');
     const sortKey = queryParams.get('sort_key');
 
-    console.log(id, sortKey);
-
     const { data } = useQuery({
         queryKey: [API_GET_USER_TEST_DETAIL],
         queryFn: () => getUserTestDetail({ id: String(id), sort_key: String(sortKey) }),
     });
 
+    const isCorrectWords = (word: string) => data?.correct_words.find((answer) => answer === word);
+
     return (
         <section className="w-full rounded-md border-none p-5 shadow-md">
             <article className="mb-3 flex flex-col gap-2">
-                <p>테스트 단어: 10개</p>
+                <p>테스트 단어: {data?.total_count}개</p>
                 <div className="flex flex-wrap gap-3">
-                    <QuizAnswerSortingButton word="의자" />
-                    <QuizAnswerSortingButton word="의자" />
-                    <QuizAnswerSortingButton word="의자" />
-                    <QuizAnswerSortingButton word="의자" />
-                    <QuizAnswerSortingButton word="의자" />
-                    <QuizAnswerSortingButton word="의자" />
-                    <QuizAnswerSortingButton word="의자" />
-                    <QuizAnswerSortingButton word="의자" />
+                    {data?.total_words.map((word) => (
+                        <QuizAnswerSortingButton word={word} key={word} />
+                    ))}
                 </div>
             </article>
             <article className="mb-3 flex flex-col">
-                <p>예측 단어 수: 5개</p>
+                <p>예측 단어 수: {data?.expected_count}개</p>
             </article>
             <article className="flex  flex-col gap-2 ">
-                <p>맞춘 단어 수: 4개</p>
+                <p>맞춘 단어 수: {data?.correct_words.length}개</p>
                 <div className="flex flex-wrap gap-3">
-                    <QuizAnswerSortingButton word="의자sdfsdfdsfdsfdsfsdf" isCorrect />
+                    {data?.total_words.map((word) => (
+                        <QuizAnswerSortingButton
+                            word={word}
+                            key={word}
+                            isCorrect={!!isCorrectWords(word)}
+                        />
+                    ))}
                 </div>
             </article>
         </section>
