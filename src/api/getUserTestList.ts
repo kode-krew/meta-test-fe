@@ -5,19 +5,18 @@ import { InfinitePaginationDataType } from '@src/types/common/InfinitePagination
 import { ApiHandler } from '@src/types/common/api';
 
 export interface GetUserTestListParameter {
-    id: string;
     limit: number;
     order?: 'desc' | 'asc';
     level?: QuizTestLevel;
     startKey?: string;
 }
-export const API_GET_USER_TEST_LIST = `/users/test/{{id}}`;
+export const API_GET_USER_TEST_LIST = `/users/test`;
 
 export const getUserTestList: ApiHandler<
     InfinitePaginationDataType<'items', GetUserTestResponse>,
     GetUserTestListParameter
-> = async ({ id, ...params }) => {
-    const { data } = await defaultRequest.get(variableAssignment(API_GET_USER_TEST_LIST, { id }), {
+> = async ({ ...params }) => {
+    const { data } = await defaultRequest.get(API_GET_USER_TEST_LIST, {
         params,
     });
 

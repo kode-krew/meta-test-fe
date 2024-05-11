@@ -1,6 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 
 import { faker } from '@faker-js/faker';
+import { GetUserTestResponse } from '@src/types/api/test';
+import { InfinitePaginationDataType } from '@src/types/common/InfinitePaginationType';
+import { InfiniteData } from '@tanstack/react-query';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -11,10 +14,14 @@ import {
     Legend,
     ChartOptions,
 } from 'chart.js';
+import dayjs from 'dayjs';
 import { Bar } from 'react-chartjs-2';
 import './bar-chart.css';
 
-interface QuizResultBarChartProps {}
+interface QuizResultBarChartProps {
+    chartData?: InfiniteData<InfinitePaginationDataType<'items', GetUserTestResponse>>;
+    onObserve: VoidFunction;
+}
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -44,78 +51,93 @@ export const options: ChartOptions<'bar'> = {
         },
     },
 };
-const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'ssss',
-    'April',
-    'May',
-    'June',
-    'July',
-    'ssss',
-];
+// const labels = [
+//     'January',
+//     'February',
+//     'March',
+//     'April',
+//     'May',
+//     'June',
+//     'July',
+//     'ssss',
+//     'April',
+//     'May',
+//     'June',
+//     'July',
+//     'ssss',
+// ];
 
-export const options2: ChartOptions<'bar'> = {
-    layout: {
-        padding: {
-            top: 10,
-        },
-    },
-    scales: {
-        x: {
-            // bar 너비 조정
-            ticks: {
-                maxTicksLimit: labels?.length,
-                padding: 0,
+const QuizResultBarChart: React.FC<QuizResultBarChartProps> = ({ chartData, onObserve }) => {
+    const labels = useMemo(
+        () =>
+            chartData?.pages.flatMap((charts) =>
+                charts.items.flatMap((chart) => dayjs(chart.createdAt).format('MM.DD')),
+            ),
+        [chartData?.pages],
+    );
+    const scores = useMemo(
+        () =>
+            chartData?.pages
+                .map((chart) => chart.items.flatMap((value) => value.score))
+                .flatMap((value) => value),
+        [chartData?.pages],
+    );
+    const options2: ChartOptions<'bar'> = {
+        layout: {
+            padding: {
+                top: 10,
             },
-            grid: {
+        },
+        scales: {
+            x: {
+                // bar 너비 조정
+                ticks: {
+                    maxTicksLimit: labels?.length,
+                    padding: 0,
+                },
+                grid: {
+                    display: false,
+                },
+            },
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    display: false,
+                },
+                grid: {
+                    drawTicks: true,
+                    lineWidth: 2,
+                    tickLength: 1,
+                },
+            },
+        },
+        maintainAspectRatio: false,
+
+        plugins: {
+            legend: {
                 display: false,
             },
         },
-        y: {
-            beginAtZero: true,
-            ticks: {
-                display: false,
+    };
+
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: 'Dataset 2',
+                data: scores,
+                backgroundColor: '#6ac8d8',
+                borderRadius: Number.MAX_VALUE,
+                borderSkipped: false,
+                borderWidth: 1,
+                // 막대의 너비 고정
+                barThickness: 14, // 바의 너비를 14px로 고정
+                // 데이터의 양에 따라 동적으로 조절
+                barPercentage: 0.8, // 예시 값, 실제로는 데이터 양에 따라 조절 필요
+                categoryPercentage: 0.8, // 예시 값, 실제로는 데이터 양에 따라 조절 필요
             },
-            grid: {
-                drawTicks: true,
-                lineWidth: 2,
-                tickLength: 1,
-            },
-        },
-    },
-    maintainAspectRatio: false,
-
-    plugins: {
-        legend: {
-            display: false,
-        },
-    },
-};
-
-export const data = {
-    labels,
-    datasets: [
-        {
-            label: 'Dataset 2',
-            data: labels.map(() => faker.number.int({ min: 0, max: 1000 })),
-            backgroundColor: '#6ac8d8',
-            borderRadius: Number.MAX_VALUE,
-            borderSkipped: false,
-            borderWidth: 1,
-            barPercentage: 1,
-            categoryPercentage: 1,
-            barThickness: 14,
-        },
-    ],
-};
-
-const QuizResultBarChart: React.FC<QuizResultBarChartProps> = () => {
+        ],
+    };
     const chartContainerRef = useRef<HTMLDivElement>(null);
 
     const smoothScrollTo = (targetX: number) => {
@@ -158,6 +180,7 @@ const QuizResultBarChart: React.FC<QuizResultBarChartProps> = () => {
             const targetX =
                 chartContainerRef.current.scrollLeft + chartContainerRef.current.clientWidth * 0.5;
             smoothScrollTo(targetX);
+            onObserve();
         }
     };
 
