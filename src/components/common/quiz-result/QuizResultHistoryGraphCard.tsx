@@ -21,12 +21,15 @@ const QuizResultHistoryGraphCard: FC<QuizResultHistoryGraphCardProps> = () => {
         queryKey: [API_GET_USER_PROFILE],
         queryFn: () => getUserProfile(),
     });
-    const { data } = useInfiniteQuery({
+    const {
+        data: chartData,
+        hasNextPage,
+        fetchNextPage,
+    } = useInfiniteQuery({
         queryKey: [API_GET_USER_TEST_LIST, { level: 'all' }],
         queryFn: ({ pageParam }) =>
             getUserTestList({
-                id: userData?.id ?? '',
-                limit: 1,
+                limit: 2,
                 level: 'all',
                 order: 'desc',
                 startKey: pageParam || undefined,
@@ -44,6 +47,10 @@ const QuizResultHistoryGraphCard: FC<QuizResultHistoryGraphCardProps> = () => {
     };
 
     const isLogin = useMemo(() => !!token, [token]);
+
+    const onObserve = () => {
+        if (hasNextPage) fetchNextPage();
+    };
 
     return (
         <section className="relative mt-3 w-full rounded-md border border-none p-5 shadow-md">
@@ -69,7 +76,7 @@ const QuizResultHistoryGraphCard: FC<QuizResultHistoryGraphCardProps> = () => {
                     </div>
                 </article>
                 <section className="h-80 w-full">
-                    <QuizResultBarChart />
+                    <QuizResultBarChart chartData={chartData} onObserve={onObserve} />
                 </section>
             </div>
         </section>
