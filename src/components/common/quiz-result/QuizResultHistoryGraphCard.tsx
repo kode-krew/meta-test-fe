@@ -6,17 +6,38 @@ import { API_GET_USER_TEST_LIST, getUserTestList } from '@src/api/getUserTestLis
 import SelectBox, { SelectBoxOptionType } from '@src/components/common/SelectBox';
 import HomeLoginModalScreen from '@src/components/screens/home/components/login/HomeLoginModalScreen';
 import { ModalService } from '@src/service/ModalService';
+import { QuizTestLevel } from '@src/types/api/test';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useCookies } from 'react-cookie';
-import QuizResultBarChart from './QuizResultBarChart';
+import { QuizResultBarChart } from './QuizResultBarChart';
 
 interface QuizResultHistoryGraphCardProps {
     isLoginSns: boolean;
 }
 
-const options: SelectBoxOptionType[] = [{ id: 'all', label: '전체' }];
+const options: SelectBoxOptionType[] = [
+    { id: 'all', label: '전체' },
+    {
+        id: 'beginner',
+        label: '초급',
+    },
+    {
+        id: 'intermediate',
+        label: '중급',
+    },
+    {
+        id: 'advanced',
+        label: '고급',
+    },
+];
+function isValidTestLevelType(value: unknown): value is QuizTestLevel {
+    return (
+        value === 'all' || value === 'beginner' || value === 'intermediate' || value === 'advanced'
+    );
+}
 
 const QuizResultHistoryGraphCard: FC<QuizResultHistoryGraphCardProps> = () => {
+    const [selectedLevel, setSelectedLevel] = useState<QuizTestLevel>('all');
     const { data: userData } = useQuery({
         queryKey: [API_GET_USER_PROFILE],
         queryFn: () => getUserProfile(),
@@ -26,11 +47,11 @@ const QuizResultHistoryGraphCard: FC<QuizResultHistoryGraphCardProps> = () => {
         hasNextPage,
         fetchNextPage,
     } = useInfiniteQuery({
-        queryKey: [API_GET_USER_TEST_LIST, { level: 'all' }],
+        queryKey: [API_GET_USER_TEST_LIST, { level: selectedLevel }],
         queryFn: ({ pageParam }) =>
             getUserTestList({
-                limit: 2,
-                level: 'all',
+                limit: 5,
+                level: selectedLevel,
                 order: 'desc',
                 startKey: pageParam || undefined,
             }),
@@ -70,8 +91,12 @@ const QuizResultHistoryGraphCard: FC<QuizResultHistoryGraphCardProps> = () => {
                     <div className="w-36">
                         <SelectBox
                             options={options}
-                            onOptionChange={() => {}}
-                            selectedOption="전체"
+                            onOptionChange={(e) => {
+                                if (isValidTestLevelType(e.target.value)) {
+                                    setSelectedLevel(e.target.value);
+                                }
+                            }}
+                            selectedOption={selectedLevel}
                         />
                     </div>
                 </article>
