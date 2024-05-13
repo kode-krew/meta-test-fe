@@ -4,7 +4,7 @@ interface QuizBannerProps {}
 
 const QuizBanner: FC<QuizBannerProps> = () => (
     <div
-        className="// container mt-10
+        className="container mt-10
             flex
             h-auto
             w-full

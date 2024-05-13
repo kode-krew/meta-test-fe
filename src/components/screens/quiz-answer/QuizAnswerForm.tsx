@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, useCallback } from 'react';
 import CommonInput from '@src/components/common/CommonInput';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -23,7 +25,7 @@ export const QuizAnswerForm: FC<QuizAnswerFormProps> = () => {
     const setSortingAnswers = useCallback(
         (value: string) => {
             const originalArr = getValues('answers');
-            if (originalArr.includes(value)) {
+            if (originalArr.includes(value) || !value) {
                 return;
             }
             setValue('answers', [...originalArr, value]);

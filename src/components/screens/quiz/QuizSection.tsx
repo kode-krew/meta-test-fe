@@ -1,5 +1,7 @@
+'use client';
+
 import { FC, useCallback, useState } from 'react';
-import { ModalService } from '@src/components/common/modal/ModalService';
+import { ModalService } from '@src/service/ModalService';
 import 'swiper/css';
 import QuizStartButton from './QuizStartButton';
 import QuizSwiper from './QuizSwiper';

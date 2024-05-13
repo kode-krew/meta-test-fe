@@ -1,5 +1,5 @@
 import { FC, useEffect, useLayoutEffect, useState } from 'react';
-import { ModalService } from '@src/components/common/modal/ModalService';
+import { ModalService } from '@src/service/ModalService';
 
 interface QuizTimerProps {
     count: number;

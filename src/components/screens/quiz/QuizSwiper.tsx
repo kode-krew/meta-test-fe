@@ -1,5 +1,8 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { getRandomQuizList } from '@src/lib/quiz/getRandomQuizList';
+import { QuizListService } from '@src/service/QuizListService';
+import { QuizTestLevel } from '@src/types/api/test';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Autoplay, EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import QuizCard from './QuizCard';
@@ -8,10 +11,14 @@ interface QuizSwiperProps {
     count: number;
 }
 
-const mock = Array.from({ length: 5 }).map((_, index) => ({ id: index, value: index.toString() }));
-
 const QuizSwiper: FC<QuizSwiperProps> = ({ count }) => {
+    const quizListService = QuizListService.getInstance();
     const { replace } = useRouter();
+    const { get } = useSearchParams();
+    const difficulty = get('difficulty') as QuizTestLevel;
+
+    const quizList = getRandomQuizList({ difficulty });
+
     const [controlledSwiper, setControlledSwiper] = useState<SwiperClass>();
     const progressCircle = useRef<SVGSVGElement>(null);
     const progressContent = useRef<HTMLSpanElement>(null);
@@ -28,6 +35,10 @@ const QuizSwiper: FC<QuizSwiperProps> = ({ count }) => {
             controlledSwiper?.autoplay.start();
         }
     }, [controlledSwiper?.autoplay, count]);
+
+    useEffect(() => {
+        quizListService.setQuizList(quizList);
+    }, [quizList, quizListService]);
 
     return (
         <Swiper
@@ -64,11 +75,18 @@ const QuizSwiper: FC<QuizSwiperProps> = ({ count }) => {
             className="h-full w-full"
             effect="coverflow"
         >
-            {mock.map((item) => (
-                <SwiperSlide key={item.id} className="h-full w-full">
-                    <QuizCard words={item.value} />
+            {count && (
+                <SwiperSlide>
+                    <QuizCard words="퀴즈 시작을 눌러주세요." />
                 </SwiperSlide>
-            ))}
+            )}
+
+            {!count &&
+                quizList.map((item) => (
+                    <SwiperSlide key={item.id} className="h-full w-full">
+                        <QuizCard words={item.word} />
+                    </SwiperSlide>
+                ))}
 
             {!count ? (
                 <div className="autoplay-progress" slot="container-end">

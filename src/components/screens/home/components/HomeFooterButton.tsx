@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 import RoundSquareButton from '@src/components/common/RoundSquareButton';
-import { ModalService } from '@src/components/common/modal/ModalService';
+import { ModalService } from '@src/service/ModalService';
 import HomeQuizSelectScreen from './HomeQuizSelectScreen';
 
 interface HomeFooterButtonProps {}
