@@ -15,7 +15,7 @@
 }
 .colLarge {
     width: 100%;
-
+    border: 1px solid red;
     max-width: 590px;
     overflow: auto;
     scrollbar-width: none; /* Firefox */

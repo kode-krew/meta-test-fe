@@ -1,143 +1,17 @@
-import React, { useMemo, useRef } from 'react';
-
-import { faker } from '@faker-js/faker';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { GetUserTestResponse } from '@src/types/api/test';
 import { InfinitePaginationDataType } from '@src/types/common/InfinitePaginationType';
 import { InfiniteData } from '@tanstack/react-query';
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend,
-    ChartOptions,
-} from 'chart.js';
 import dayjs from 'dayjs';
-import { Bar } from 'react-chartjs-2';
-import './bar-chart.css';
+import { Bar, BarChart, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import Observer from '../hoc/Observer';
 
 interface QuizResultBarChartProps {
     chartData?: InfiniteData<InfinitePaginationDataType<'items', GetUserTestResponse>>;
     onObserve: VoidFunction;
 }
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-
-export const options: ChartOptions<'bar'> = {
-    layout: {
-        padding: {
-            bottom: 21,
-        },
-    },
-    scales: {
-        x: {
-            ticks: {
-                display: false,
-            },
-        },
-        y: {
-            beginAtZero: true,
-            afterFit: (ctx) => {
-                ctx.width = 40;
-            },
-        },
-    },
-    maintainAspectRatio: false,
-    plugins: {
-        legend: {
-            display: false,
-        },
-    },
-};
-// const labels = [
-//     'January',
-//     'February',
-//     'March',
-//     'April',
-//     'May',
-//     'June',
-//     'July',
-//     'ssss',
-//     'April',
-//     'May',
-//     'June',
-//     'July',
-//     'ssss',
-// ];
-
-const QuizResultBarChart: React.FC<QuizResultBarChartProps> = ({ chartData, onObserve }) => {
-    const labels = useMemo(
-        () =>
-            chartData?.pages.flatMap((charts) =>
-                charts.items.flatMap((chart) => dayjs(chart.createdAt).format('MM.DD')),
-            ),
-        [chartData?.pages],
-    );
-    const scores = useMemo(
-        () =>
-            chartData?.pages
-                .map((chart) => chart.items.flatMap((value) => value.score))
-                .flatMap((value) => value),
-        [chartData?.pages],
-    );
-    const options2: ChartOptions<'bar'> = {
-        layout: {
-            padding: {
-                top: 10,
-            },
-        },
-        scales: {
-            x: {
-                // bar 너비 조정
-                ticks: {
-                    maxTicksLimit: labels?.length,
-                    padding: 0,
-                },
-                grid: {
-                    display: false,
-                },
-            },
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    display: false,
-                },
-                grid: {
-                    drawTicks: true,
-                    lineWidth: 2,
-                    tickLength: 1,
-                },
-            },
-        },
-        maintainAspectRatio: false,
-
-        plugins: {
-            legend: {
-                display: false,
-            },
-        },
-    };
-
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: 'Dataset 2',
-                data: scores,
-                backgroundColor: '#6ac8d8',
-                borderRadius: Number.MAX_VALUE,
-                borderSkipped: false,
-                borderWidth: 1,
-                // 막대의 너비 고정
-                barThickness: 14, // 바의 너비를 14px로 고정
-                // 데이터의 양에 따라 동적으로 조절
-                barPercentage: 0.8, // 예시 값, 실제로는 데이터 양에 따라 조절 필요
-                categoryPercentage: 0.8, // 예시 값, 실제로는 데이터 양에 따라 조절 필요
-            },
-        ],
-    };
+export const QuizResultBarChart: React.FC<QuizResultBarChartProps> = ({ chartData, onObserve }) => {
     const chartContainerRef = useRef<HTMLDivElement>(null);
 
     const smoothScrollTo = (targetX: number) => {
@@ -184,22 +58,80 @@ const QuizResultBarChart: React.FC<QuizResultBarChartProps> = ({ chartData, onOb
         }
     };
 
+    const handleScroll = useCallback(() => {
+        const container = chartContainerRef.current;
+        if (!container) return;
+
+        const scrollPosition = container.scrollLeft + container.offsetWidth;
+        const { scrollWidth } = container;
+
+        if (scrollPosition >= scrollWidth) {
+            onObserve();
+        }
+    }, [onObserve]);
+
+    console.log(chartData);
     return (
-        <div className="chartBox">
+        <div className="flex h-80 w-full">
             <div
                 className="mr-4 flex cursor-pointer flex-col justify-center"
                 onClick={handleScrollLeft}
             >
                 ◀
             </div>
-            <div className="colSmall">
-                <Bar options={options} data={data} />
-            </div>
-            <div className="colLarge" ref={chartContainerRef}>
-                <div className="box">
-                    <Bar options={options2} data={data} />
-                </div>
-            </div>
+            {chartData && chartData.pages[0].count > 0 ? (
+                <>
+                    <div>
+                        <BarChart
+                            width={70}
+                            height={300}
+                            data={chartData?.pages.flatMap((chart) => chart.items)}
+                            barSize={10}
+                            barGap={10}
+                        >
+                            <YAxis display={3} dataKey="score" />
+                        </BarChart>
+                    </div>
+                    <div
+                        style={{
+                            width: 550,
+                            height: 300,
+                            overflow: 'auto',
+                            scrollbarWidth: 'none' /* Firefox */,
+                            msOverflowStyle: 'none',
+                        }}
+                        onScroll={handleScroll}
+                        ref={chartContainerRef}
+                    >
+                        <ResponsiveContainer width={550} height={300}>
+                            <BarChart
+                                width={550}
+                                height={300}
+                                data={chartData?.pages.flatMap((chart) => chart.items)}
+                                barSize={10}
+                                barGap={500}
+                            >
+                                <XAxis dataKey="createdAt" />
+                                <Tooltip />
+                                <Bar
+                                    width={25}
+                                    barSize={10}
+                                    dataKey="score"
+                                    fill="#8884d8"
+                                    activeBar={<Rectangle fill="pink" stroke="blue" />}
+                                />
+                                {/* Observer 컴포넌트를 차트 끝에 배치 */}
+                                <Observer onObserve={onObserve} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                </>
+            ) : null}
+            {chartData && chartData.pages[0].count === 0 ? (
+                <span className="justify- flex h-full w-full items-center justify-center">
+                    현재 레벨에 해당하는 결과가 없습니다.
+                </span>
+            ) : null}
             <div
                 className="ml-4 flex cursor-pointer flex-col justify-center "
                 onClick={handleScrollRight}
@@ -209,5 +141,3 @@ const QuizResultBarChart: React.FC<QuizResultBarChartProps> = ({ chartData, onOb
         </div>
     );
 };
-
-export default QuizResultBarChart;

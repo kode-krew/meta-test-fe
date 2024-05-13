@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { getRandomQuizList } from '@src/lib/quiz/getRandomQuizList';
 import { QuizListService } from '@src/service/QuizListService';
-import { QuizDifficulty } from '@src/types/api/tests';
+import { QuizTestLevel } from '@src/types/api/test';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Autoplay, EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
@@ -15,7 +15,7 @@ const QuizSwiper: FC<QuizSwiperProps> = ({ count }) => {
     const quizListService = QuizListService.getInstance();
     const { replace } = useRouter();
     const { get } = useSearchParams();
-    const difficulty = get('difficulty') as QuizDifficulty;
+    const difficulty = get('difficulty') as QuizTestLevel;
 
     const quizList = getRandomQuizList({ difficulty });
 
