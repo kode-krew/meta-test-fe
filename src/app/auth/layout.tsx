@@ -10,9 +10,6 @@ interface HomePageLayoutProps {
 
 const HomePageLayout: FC<HomePageLayoutProps> = ({ children, params: { locale } }) => (
     <div>
-        <Head>
-            <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
-        </Head>
         <div>{children}</div>
     </div>
 );
