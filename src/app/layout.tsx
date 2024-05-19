@@ -9,16 +9,9 @@ import { Metadata } from 'next';
 interface LocaleLayoutProps {
     children: React.ReactNode;
 }
-export const metadata: Metadata = {
-    title: 'Meta Test',
-    description: 'Meta Test',
-};
 
 const LocaleLayout: FC<LocaleLayoutProps> = ({ children }) => (
     <html lang="ko">
-      <head>
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
-      </head>
         <body>
             <TanstackQueryProvider>
                 {children}
