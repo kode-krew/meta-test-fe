@@ -12,17 +12,13 @@ interface LocaleLayoutProps {
 export const metadata: Metadata = {
     title: 'Meta Test',
     description: 'Meta Test',
-    other: {
-        'http-equiv': 'Content-Security-Policy',
-        content: 'upgrade-insecure-requests'
-    }
 };
 
 const LocaleLayout: FC<LocaleLayoutProps> = ({ children }) => (
     <html lang="ko">
-      <Head>
+      <head>
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
-      </Head>
+      </head>
         <body>
             <TanstackQueryProvider>
                 {children}
