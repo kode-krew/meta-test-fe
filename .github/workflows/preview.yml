@@ -2,7 +2,7 @@ name: Preview Deploy
 
 on:
     push:
-        branches: ['develop']
+        branches: [develop]
 
 jobs:
     build:
@@ -27,8 +27,8 @@ jobs:
 
               with:
                   source-directory: 'output'
-                  destination-github-username: minchodang
-                  destination-repository-name: meta-test-fe
+                  destination-github-username: 'minchodang'
+                  destination-repository-name: 'meta-test-fe'
                   user-email: ${{ secrets.EMAIL }}
                   commit-message: ${{ github.event.commits[0].message }}
                   target-branch: develop
