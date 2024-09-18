@@ -1,10 +1,9 @@
-import { useEffect, useMemo } from 'react';
 import { API_GET_GOOGLE_LOGIN, getGoogleLogin } from '@src/api/getGoogleLogin';
 import { API_GET_KAKAKO_LOGIN, getKakaoLogin } from '@src/api/getKakaoLogin';
-import defaultRequest from '@src/lib/axios/defaultRequest';
 import { ToastService } from '@src/service/ToastService';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useMemo } from 'react';
 import { useCookies } from 'react-cookie';
 
 export type SocialType = 'google' | 'kakao';
