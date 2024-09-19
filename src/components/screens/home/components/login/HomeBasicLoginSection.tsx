@@ -21,7 +21,6 @@ export interface HomeBasicLoginFormValue {
 }
 
 const HomeBasicLoginSection: FC = () => {
-    const [, setCookie] = useCookies(['refreshToken']);
     const modalService = ModalService.getInstance();
     const toastService = ToastService.getInstance();
     const login = useMutation({
@@ -31,7 +30,6 @@ const HomeBasicLoginSection: FC = () => {
                 const accessToken = data.headers.access_token;
                 const refreshToken = data.headers.refresh_token;
                 defaultRequest.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-                await setCookie('refreshToken', refreshToken);
                 toastService.addToast('로그인 되었습니다.');
                 modalService.closeEntireModal();
             }

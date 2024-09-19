@@ -1,4 +1,3 @@
-import { FC, useState } from 'react';
 import { patchEmailVerification } from '@src/api/patchEmailVerification';
 import { postEmailVerification } from '@src/api/postEmailVerification';
 import { postLogin } from '@src/api/postLogin';
@@ -9,7 +8,7 @@ import { ModalService } from '@src/service/ModalService';
 import { ToastService } from '@src/service/ToastService';
 import { useMutation } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
-import { useCookies } from 'react-cookie';
+import { FC, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import HomeSignupButton from './HomeSignupButton';
 import HomeSignupPassword from './HomeSignupPassword';
@@ -24,7 +23,6 @@ export interface HomeSignupFormValue {
 }
 
 const HomeSignupScreen: FC = () => {
-    const [, setCookie] = useCookies(['refreshToken']);
     const [step, setStep] = useState<number>(1);
     const toastService = ToastService.getInstance();
     const modalService = ModalService.getInstance();
@@ -51,17 +49,17 @@ const HomeSignupScreen: FC = () => {
         mutationFn: postSignup,
     });
 
-    const login = useMutation({
-        mutationFn: postLogin,
-        onSuccess: async (data) => {
-            if (data) {
-                const accessToken = data.headers.access_token;
-                const refreshToken = data.headers.refresh_token;
-                defaultRequest.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-                await setCookie('refreshToken', refreshToken);
-            }
-        },
-    });
+    // const login = useMutation({
+    //     mutationFn: postLogin,
+    //     onSuccess: async (data) => {
+    //         if (data) {
+    //             const accessToken = data.headers.access_token;
+    //             const refreshToken = data.headers.refresh_token;
+    //             defaultRequest.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    //             await setCookie('refreshToken', refreshToken);
+    //         }
+    //     },
+    // });
 
     const onSubmit = async ({ email, password }: HomeSignupFormValue) => {
         submitSignupForm.mutate(
