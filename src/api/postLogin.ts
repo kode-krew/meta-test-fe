@@ -1,5 +1,6 @@
 import defaultRequest from '@src/lib/axios/defaultRequest';
 import { UserInformationResponse } from '@src/types/api/Signs';
+import axios from 'axios';
 
 interface PostLoginBody {
     email: string;
@@ -7,6 +8,6 @@ interface PostLoginBody {
 }
 
 export const postLogin = async (body: PostLoginBody) => {
-    const data = await defaultRequest.post<UserInformationResponse>('/auth/token', { ...body });
+    const data = await axios.post<UserInformationResponse>('/api/auth', { ...body });
     return data;
 };

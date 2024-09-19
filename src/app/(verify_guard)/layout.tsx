@@ -8,11 +8,11 @@ const reissueToken = async () => {
     try {
         await axios.put(`${process.env.NEXT_PUBLIC_MATE_TEST_WEB_HOST_URL}/api/auth`);
     } catch (error) {
-        redirect('/login');
+        redirect('/');
     }
 };
 
-const checkToken = async (accessToken: string | undefined, refreshToken: string | undefined) => {
+const checkToken = async (accessToken?: string) => {
     try {
         await axios(`${process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL}/users`, {
             headers: {
@@ -24,15 +24,14 @@ const checkToken = async (accessToken: string | undefined, refreshToken: string 
         if (isAxiosError(error) && error.response?.status === 401) {
             reissueToken();
         } else {
-            redirect('/login');
+            redirect('/');
         }
     }
 };
 
 const VerifyPageLayout = ({ children }: PropsWithChildren) => {
     const accessToken = cookies().get('atk')?.value;
-    const refreshToken = cookies().get('rtk')?.value;
-    checkToken(accessToken, refreshToken); // 비동기 처리를 기다린 후에 처리
+    checkToken(accessToken); // 비동기 처리를 기다린 후에 처리
 
     return (
         <>

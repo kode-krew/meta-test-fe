@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { revalidateHomeVerify } from '../actions/revalidateHomeVerify';
 
 type SocialLoginType = 'google' | 'kakao';
 
@@ -58,6 +59,7 @@ const AuthPage = () => {
 
                 if (data) {
                     toastService.addToast('로그인 되었습니다.');
+                    revalidateHomeVerify();
                     router.replace(loginPath ?? '/');
                 } else {
                     toastService.addToast('로그인에 실패하였습니다.');
