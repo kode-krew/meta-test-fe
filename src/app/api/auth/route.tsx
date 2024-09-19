@@ -16,10 +16,11 @@ export async function POST(request: NextRequest) {
         );
         console.log(res.data);
 
-        const { accessToken, refreshToken } = res.data;
+        const { refresh_token } = res.data;
+        const accessToken = res.headers.access_token;
 
         // Refresh Token을 HttpOnly 쿠키로 설정 (기간 2주)
-        cookies().set('rtk', refreshToken, {
+        cookies().set('rtk', refresh_token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             maxAge: 60 * 60 * 24 * 14, // 2주
@@ -57,22 +58,22 @@ export async function PUT(request: NextRequest) {
         const res = await axios.post(
             `${process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL}/auth/token/refresh`,
             {
-                refreshToken,
-                accessToken,
+                refresh_Token: refreshToken,
             },
         );
 
-        const newResponse = res;
+        const newAccessToken = res.headers.access_token;
+        const newRefreshToken = res.data.refresh_token;
 
         // 새로운 Refresh Token을 HttpOnly 쿠키로 설정
-        cookies().set('rtk', newResponse.data.refreshToken, {
+        cookies().set('rtk', newRefreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             maxAge: 60 * 60 * 24 * 14, // 2주
             path: '/',
             sameSite: 'strict',
         });
-        cookies().set('atk', newResponse.data.accessToken, {
+        cookies().set('atk', newAccessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             maxAge: 60 * 30, // 30분
@@ -82,7 +83,7 @@ export async function PUT(request: NextRequest) {
 
         // 새로운 Access Token을 응답 헤더로 클라이언트에 전달
         const response = NextResponse.json({ success: true });
-        response.headers.set('Authorization', `Bearer ${newResponse.data.accessToken}`);
+        response.headers.set('Authorization', `Bearer ${newAccessToken}`);
         return response;
     } catch (error) {
         console.log(error, '리이슈');

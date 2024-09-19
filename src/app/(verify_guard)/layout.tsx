@@ -14,7 +14,7 @@ const reissueToken = async () => {
 
 const checkToken = async (accessToken: string | undefined, refreshToken: string | undefined) => {
     try {
-        await axios(`${process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL}/v1/me`, {
+        await axios(`${process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL}/users`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
