@@ -1,19 +1,17 @@
 'use client';
-
-import React, { FC, useCallback, useMemo } from 'react';
 import Button from '@src/components/common/Button';
 import { ModalService } from '@src/service/ModalService';
-import { useRouter } from 'next/navigation';
-import { useCookies } from 'react-cookie';
+import { useCallback } from 'react';
 import HomeLoginModalScreen from '../components/login/HomeLoginModalScreen';
+import { useRouter } from 'next/navigation';
 
-const HomeHeaderButton: FC = () => {
-    const [cookie] = useCookies(['refreshToken']);
+interface HomeHeaderButtonProps {
+    isLogin: boolean;
+}
+
+const HomeHeaderButton = ({ isLogin }: HomeHeaderButtonProps) => {
     const { push } = useRouter();
     const modalService = ModalService.getInstance();
-    const token = cookie.refreshToken;
-
-    const isLogin = useMemo(() => !!token, [token]);
 
     const onClickLoginButton = useCallback(() => {
         if (isLogin) {
@@ -32,4 +30,4 @@ const HomeHeaderButton: FC = () => {
     );
 };
 
-export default React.memo(HomeHeaderButton);
+export default HomeHeaderButton;

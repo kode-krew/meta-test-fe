@@ -49,17 +49,18 @@ const HomeSignupScreen: FC = () => {
         mutationFn: postSignup,
     });
 
-    // const login = useMutation({
-    //     mutationFn: postLogin,
-    //     onSuccess: async (data) => {
-    //         if (data) {
-    //             const accessToken = data.headers.access_token;
-    //             const refreshToken = data.headers.refresh_token;
-    //             defaultRequest.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-    //             await setCookie('refreshToken', refreshToken);
-    //         }
-    //     },
-    // });
+    const login = useMutation({
+        mutationFn: postLogin,
+        onSuccess: async (data) => {
+            if (data) {
+                const accessToken = data.headers.access_token;
+                defaultRequest.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+            }
+        },
+        onError: (error) => {
+            toastService.addToast('로그인에 실패했습니다. 다시 시도해 주세요.');
+        },
+    });
 
     const onSubmit = async ({ email, password }: HomeSignupFormValue) => {
         submitSignupForm.mutate(

@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
     const { email, password } = await request.json();
 
-    console.log(email, password);
     try {
         const res = await axios.post(
             `${process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL}/auth/token`,
@@ -14,7 +13,6 @@ export async function POST(request: NextRequest) {
                 password,
             },
         );
-        console.log(res.data);
 
         const { refresh_token } = res.data;
         const accessToken = res.headers.access_token;
@@ -48,7 +46,6 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
     const refreshToken = cookies().get('rtk')?.value;
-    const accessToken = cookies().get('atk')?.value;
 
     if (!refreshToken) {
         return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
