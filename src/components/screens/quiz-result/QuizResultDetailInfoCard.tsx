@@ -1,5 +1,4 @@
 'use client';
-
 import { FC } from 'react';
 import { API_GET_USER_TEST_DETAIL, getUserTestDetail } from '@src/api/getUserTestDetail';
 import QuizCorrectCircleIcon from '@src/components/common/Icons/QuizCorrectCircleIcon';
