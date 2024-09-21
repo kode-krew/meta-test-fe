@@ -7,10 +7,10 @@ import QuizResultRankingCard from '@src/components/common/quiz-result/QuizResult
 import { useRouter } from 'next/navigation';
 
 interface QuizResultHistorySectionProps {
-    isLoginSns: boolean;
+    isLogin: boolean;
 }
 
-const QuizResultHistorySection: FC<QuizResultHistorySectionProps> = ({ isLoginSns }) => {
+const QuizResultHistorySection: FC<QuizResultHistorySectionProps> = ({ isLogin }) => {
     const { push } = useRouter();
     const onClick = () => {
         push('/my-page');
@@ -19,7 +19,7 @@ const QuizResultHistorySection: FC<QuizResultHistorySectionProps> = ({ isLoginSn
         <section className="mt-8 flex flex-col">
             <div className="flex justify-between">
                 <h1 className="text-2xl font-bold">기록</h1>
-                {isLoginSns && (
+                {isLogin && (
                     <div>
                         <Button variant="primary" onClick={onClick}>
                             마이페이지
@@ -27,7 +27,7 @@ const QuizResultHistorySection: FC<QuizResultHistorySectionProps> = ({ isLoginSn
                     </div>
                 )}
             </div>
-            <QuizResultHistoryGraphCard isLoginSns={isLoginSns} />
+            <QuizResultHistoryGraphCard isLogin={isLogin} />
         </section>
     );
 };

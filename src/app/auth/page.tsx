@@ -75,7 +75,7 @@ const AuthPage = () => {
         };
 
         handleLogin();
-    }, [searchParams, router, socialLoginInfo]);
+    }, [router, searchParams, socialLoginInfo]);
 
     if (loading) {
         return <p>로그인 처리 중...</p>;

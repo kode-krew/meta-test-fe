@@ -1,12 +1,13 @@
 export interface AuthState {
     accessToken?: string;
+    isLogin: boolean;
 }
 
 type Subscriber = (state: AuthState) => void;
 
 export class AuthService {
     private static instance: AuthService;
-    private currentState: AuthState = { accessToken: undefined };
+    private currentState: AuthState = { accessToken: undefined, isLogin: false };
     private subscribers: Subscriber[] = [];
 
     private constructor() {}
@@ -24,21 +25,32 @@ export class AuthService {
         this.subscribers.push(callback);
     }
 
+    // 구독 해제 메서드
+    unsubscribe(callback: Subscriber) {
+        this.subscribers = this.subscribers.filter((sub) => sub !== callback);
+    }
+
     // 현재 상태 반환
     getAccessToken(): string | undefined {
         return this.currentState.accessToken;
+    }
+
+    // 현재 로그인 상태 반환
+
+    getIsLogin(): boolean | undefined {
+        return this.currentState.isLogin;
     }
 
     // 토큰 설정 (토큰 변경 시 구독자들에게 알림)
     setAccessToken(token: string | undefined) {
         this.currentState.accessToken = token;
         this.notifySubscribers();
-        // 로컬 스토리지에 저장할 경우
-        if (token) {
-            localStorage.setItem('accessToken', token);
-        } else {
-            localStorage.removeItem('accessToken');
-        }
+    }
+
+    setLoginState(isLogin: boolean) {
+        this.currentState.isLogin = isLogin;
+        console.log('Login State Updated: ', this.currentState.isLogin); // 상태가 제대로 변경되는지 확인
+        this.notifySubscribers();
     }
 
     // 상태가 변경되면 구독자들에게 알림

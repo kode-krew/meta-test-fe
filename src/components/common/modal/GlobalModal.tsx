@@ -10,7 +10,7 @@ const GlobalModal: React.FC = () => {
     const [contents, setContents] = useState<
         Array<{ content: ReactNode; backGroundColor?: string }>
     >([]);
-    
+
     useEffect(() => {
         const handleModalChange = ({
             isOpen: isModalOpen,
@@ -23,7 +23,7 @@ const GlobalModal: React.FC = () => {
         return () => {
             modalService.unsubscribe(handleModalChange);
         };
-    }, []);
+    }, [modalService]);
 
     if (!isOpen) {
         return null;
