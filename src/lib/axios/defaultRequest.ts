@@ -1,10 +1,14 @@
+import { AuthService } from '@src/service/AuthService';
 import axios from 'axios';
-import { Cookies, useCookies } from 'react-cookie';
+import { Cookies } from 'react-cookie';
+
+// const authService = AuthService.getInstance();
 
 const defaultRequest = axios.create({
     baseURL: process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL,
     headers: {
         'Content-Type': 'application/json',
+        // Authorization: `Bearer ${authService.getAccessToken()}`, // 초기 토큰 설정
     },
     withCredentials: true,
 });
@@ -17,19 +21,13 @@ defaultRequest.interceptors.response.use(
     async (response) => response,
     async (error) => {
         if (error.response && error.response.status === 401) {
-            const refreshToken = cookies.get('refreshToken');
-            if (!refreshToken) {
-                return Promise.reject(error);
-            }
-
             if (retryCount < maxRetries) {
                 retryCount += 1;
                 try {
-                    const response = await defaultRequest.post('/auth/token/refresh', {
-                        refresh_token: refreshToken,
-                    });
+                    const response = await defaultRequest.post('/auth/token/refresh');
                     const accessToken = response.headers.access_token;
                     defaultRequest.defaults.headers.Authorization = `Bearer ${accessToken}`;
+                    // authService.setAccessToken(accessToken); // 갱신된 토큰을 AuthService에 전달
                     await defaultRequest.request(error.config);
                 } catch (refreshError) {
                     return Promise.reject(refreshError);
