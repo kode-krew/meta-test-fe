@@ -13,7 +13,7 @@ interface LoginState {
 const reissueToken = async (): Promise<LoginState> => {
     try {
         const { headers } = await axios.put(
-            `${process.env.NEXT_PUBLIC_MATE_TEST_WEB_HOST_URL}/api/auth`,
+            `${process.env.NEXT_PUBLIC_META_TEST_WEB_HOST_URL}/api/auth`,
             {
                 headers: {
                     refreshToken: cookies().get('rtk')?.value,

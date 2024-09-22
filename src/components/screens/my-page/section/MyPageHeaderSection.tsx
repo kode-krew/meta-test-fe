@@ -8,13 +8,14 @@ import { ToastService } from '@src/service/ToastService';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useCookies } from 'react-cookie';
+import axios from 'axios';
+import { renewAllCache } from '@src/app/actions/renewAllCache';
 
 interface MyPageHeaderSectionProps {
     isLogin: boolean;
 }
 
 const MyPageHeaderSection: FC<MyPageHeaderSectionProps> = ({ isLogin }) => {
-    const [, , removeCookies] = useCookies(['refreshToken']);
     const queryClient = useQueryClient();
     const toastService = ToastService.getInstance();
     const { replace } = useRouter();
@@ -22,7 +23,8 @@ const MyPageHeaderSection: FC<MyPageHeaderSectionProps> = ({ isLogin }) => {
         replace('/');
     };
     const onClickLogout = async () => {
-        await removeCookies('refreshToken');
+        await axios.delete(`${process.env.NEXT_PUBLIC_META_TEST_WEB_HOST_URL}/api/auth`);
+        await renewAllCache();
         await queryClient.removeQueries({
             queryKey: [API_GET_USER_PROFILE],
         });
