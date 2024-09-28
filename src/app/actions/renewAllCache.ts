@@ -2,6 +2,6 @@
 
 import { revalidatePath } from 'next/cache';
 
-export async function revalidateHomeVerify() {
+export async function renewAllCache() {
     return revalidatePath('/');
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { revalidateHomeVerify } from '@src/app/actions/revalidateHomeVerify';
+import { renewAllCache } from '@src/app/actions/renewAllCache';
 import { ToastService } from '@src/service/ToastService';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -64,7 +64,7 @@ const AuthPageClient = ({ code }: AuthPageClientProps) => {
 
                 if (data) {
                     toastService.addToast('로그인 되었습니다.');
-                    revalidateHomeVerify();
+                    renewAllCache();
                     router.replace(loginPath ?? '/');
                 } else {
                     toastService.addToast('로그인에 실패하였습니다.');
