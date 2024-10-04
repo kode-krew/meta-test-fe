@@ -85,13 +85,6 @@ export async function DELETE(request: NextRequest) {
     }
 
     try {
-        //TODO 현재 백엔드 로그아웃 기능 미구축으로 서버 통신은 잠시 보류, 추후 재구축 예정.
-        // await axios.delete(`${process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL}/auth/token`, {
-        //     headers: {
-        //         Authorization: `Bearer ${accessToken}`,
-        //     },
-        // });
-
         cookies().delete('rtk');
         cookies().delete('atk');
 
