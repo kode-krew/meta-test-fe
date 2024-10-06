@@ -9,6 +9,7 @@ import { QuizTestLevel } from '@src/types/api/test';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { FC, useState } from 'react';
 import { QuizResultBarChart } from './QuizResultBarChart';
+import { $api } from '@src/api/api';
 
 interface QuizResultHistoryGraphCardProps {
     isLogin: boolean;
@@ -37,10 +38,11 @@ function isValidTestLevelType(value: unknown): value is QuizTestLevel {
 
 const QuizResultHistoryGraphCard: FC<QuizResultHistoryGraphCardProps> = ({ isLogin }) => {
     const [selectedLevel, setSelectedLevel] = useState<QuizTestLevel>('all');
-    const { data: userData } = useQuery({
-        queryKey: [API_GET_USER_PROFILE],
-        queryFn: () => getUserProfile(),
-    });
+    // const { data: userData } = useQuery({
+    //     queryKey: [API_GET_USER_PROFILE],
+    //     queryFn: () => getUserProfile(),
+    // });
+    const { data: userData } = $api.useQuery('get', '/users');
     const {
         data: chartData,
         hasNextPage,

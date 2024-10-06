@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 import QuizAnswerExpectationInput from './QuizAnswerExpectationInput';
 import QuizAnswerExpectationSubmitButton from './QuizAnswerExpectationSubmitButton';
+import { $api } from '@src/api/api';
 
 interface QuizAnswerExpectationFormProps {
     answers: string[];
@@ -32,10 +33,8 @@ const getQuizLevel = (array: string[]) => {
 
 const QuizAnswerExpectationForm: FC<QuizAnswerExpectationFormProps> = ({ answers }) => {
     const { replace } = useRouter();
-    const { data: userProfile } = useQuery({
-        queryKey: [API_GET_USER_PROFILE],
-        queryFn: () => getUserProfile(),
-    });
+    const { data: userData } = $api.useQuery('get', '/users');
+
     const modalService = ModalService.getInstance();
     const quizService = QuizListService.getInstance();
     const testSubmit = useMutation({
@@ -56,7 +55,7 @@ const QuizAnswerExpectationForm: FC<QuizAnswerExpectationFormProps> = ({ answers
     const onValid = ({ expectationNumber }: QuizAnswerExpectationPopupFormValue) => {
         testSubmit.mutate(
             {
-                id: userProfile?.id,
+                id: userData?.id,
                 level: getQuizLevel(quizService.getQuizList().flatMap((quiz) => quiz.word)),
                 total_count: quizService.getQuizList().length,
                 expected_count: Number(expectationNumber),

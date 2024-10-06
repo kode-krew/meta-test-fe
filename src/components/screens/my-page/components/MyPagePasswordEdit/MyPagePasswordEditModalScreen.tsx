@@ -11,6 +11,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import MyPagePasswordEditNewPasswordConfirmInput from './MyPagePasswordEditNewPasswordConfirmInput';
 import MyPagePasswordEditNewPasswordInput from './MyPagePasswordEditNewPasswordInput';
 import MyPagePasswordEditSubmitButton from './MyPagePasswordEditSubmitButton';
+import { $api } from '@src/api/api';
 
 interface MyPagePasswordEditModalScreenProps {}
 
@@ -27,10 +28,12 @@ const MyPagePasswordEditModalScreen: FC<MyPagePasswordEditModalScreenProps> = ()
     const updatePassword = useMutation({
         mutationFn: patchUsers,
     });
-    const userInformation = useQuery({
-        queryKey: [API_GET_USER_PROFILE],
-        queryFn: getUserProfile,
-    });
+    // const userData?Query({
+    //     queryKey: [API_GET_USER_PROFILE],
+    //     queryFn: getUserProfile,
+    // });
+
+    const { data: userData } = $api.useQuery('get', '/users');
 
     const form = useForm<MyPagePasswordEditForm>({
         defaultValues: {
@@ -68,11 +71,11 @@ const MyPagePasswordEditModalScreen: FC<MyPagePasswordEditModalScreenProps> = ()
                     <section className="flex w-full flex-col gap-3">
                         <section className="flex w-full gap-3">
                             <p className="text-base font-bold text-gray-400">아이디</p>
-                            <span>{userInformation.data?.email}</span>
+                            <span>{userData?.email}</span>
                         </section>
                         <section className="flex gap-3">
                             <p className="text-base font-bold text-gray-400">닉네임</p>
-                            <span>{userInformation.data?.nickname}</span>
+                            <span>{userData?.nickname}</span>
                         </section>
                     </section>
                     <section className="flex w-full flex-col gap-3">
