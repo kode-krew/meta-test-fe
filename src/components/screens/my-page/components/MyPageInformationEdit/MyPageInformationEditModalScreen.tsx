@@ -12,6 +12,7 @@ import { isAxiosError } from 'axios';
 import { FormProvider, useForm } from 'react-hook-form';
 import MyPageInformationEditEmailInput from './MyPageInformationEditEmailInput';
 import MyPageInformationEditSubmitButton from './MyPageInformationEditSubmitButton';
+import { $api } from '@src/api/api';
 
 interface MyPageInformationEditModalScreenProps {}
 
@@ -34,10 +35,11 @@ const MyPageInformationEditModalScreen: FC<MyPageInformationEditModalScreenProps
         isSuccessAuthorization: false,
         request_id: undefined,
     });
-    const userInformationQuery = useQuery({
-        queryKey: [API_GET_USER_PROFILE],
-        queryFn: getUserProfile,
-    });
+    const { data: userData } = $api.useQuery('get', '/users');
+    // const userInformationQuery = useQuery({
+    //     queryKey: [API_GET_USER_PROFILE],
+    //     queryFn: getUserProfile,
+    // });
 
     const toastService = ToastService.getInstance();
     const modalService = ModalService.getInstance();
@@ -153,7 +155,7 @@ const MyPageInformationEditModalScreen: FC<MyPageInformationEditModalScreenProps
             >
                 <p className="text-2xl font-bold">정보수정</p>
                 <section className="mt-5 flex flex-col gap-6">
-                    {userInformationQuery.data?.userType === 'NORMAL' && (
+                    {userData?.userType === 'NORMAL' && (
                         <section className="flex w-full flex-col gap-3">
                             <section>
                                 <p className="text-base font-bold text-gray-400">아이디(이메일)</p>
