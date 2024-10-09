@@ -1,12 +1,10 @@
 'use client';
 
-import { randomUUID } from 'crypto';
-import { FC } from 'react';
-import { API_GET_USER_PROFILE, getUserProfile } from '@src/api/getUserProfile';
 import { API_GET_USER_TEST_DETAIL, getUserTestDetail } from '@src/api/getUserTestDetail';
 import StarIcon from '@src/components/common/Icons/StarIcon';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
+import { FC } from 'react';
 
 interface QuizResultScoreCardProps {}
 
@@ -51,10 +49,6 @@ const calculateFillRatio = ({ totalScore, maxScore, index }: StarIconFillRatioPr
 
 const QuizResultScoreCard: FC<QuizResultScoreCardProps> = () => {
     const queryParams = useSearchParams();
-    const userProfileQuery = useQuery({
-        queryKey: [API_GET_USER_PROFILE],
-        queryFn: () => getUserProfile(),
-    });
 
     const userTestQuery = useQuery({
         queryKey: [API_GET_USER_TEST_DETAIL],

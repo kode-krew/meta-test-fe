@@ -1,7 +1,6 @@
 'use client';
 
 import { FC } from 'react';
-import { API_GET_USER_PROFILE } from '@src/api/getUserProfile';
 import Button from '@src/components/common/Button';
 import HomeIcon from '@src/components/common/Icons/HomeIcon';
 import { ToastService } from '@src/service/ToastService';
@@ -10,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { renewAllCache } from '@src/app/actions/renewAllCache';
+import { $api } from '@src/api/api';
 
 interface MyPageHeaderSectionProps {
     isLogin: boolean;
@@ -26,7 +26,7 @@ const MyPageHeaderSection: FC<MyPageHeaderSectionProps> = ({ isLogin }) => {
         await axios.delete(`${process.env.NEXT_PUBLIC_META_TEST_WEB_HOST_URL}/api/auth`);
         await renewAllCache();
         await queryClient.removeQueries({
-            queryKey: [API_GET_USER_PROFILE],
+            queryKey: $api.queryOptions('get', '/users').queryKey,
         });
         await toastService.addToast('로그아웃 되었습니다.');
         replace('/');

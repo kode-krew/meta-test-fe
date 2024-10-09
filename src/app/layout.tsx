@@ -39,6 +39,7 @@ export const metadata: Metadata = {
 
 const LocaleLayout: FC<LocaleLayoutProps> = async ({ children }) => {
     const accessToken = cookies().get('atk')?.value;
+    const refreshToken = cookies().get('rtk')?.value;
     const { token } = await checkToken(accessToken);
 
     return (
@@ -61,7 +62,7 @@ const LocaleLayout: FC<LocaleLayoutProps> = async ({ children }) => {
             <body>
                 <AuthProvider
                     accessToken={accessToken ?? token?.access_token}
-                    refreshToken={token?.refresh_token}
+                    refreshToken={refreshToken ?? token?.refresh_token}
                 />
                 <TanstackQueryProvider>
                     {children}

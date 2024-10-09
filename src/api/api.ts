@@ -1,10 +1,9 @@
 import type { paths } from '@src/__generated__/api';
-import createClient from 'openapi-fetch';
+import createFetchClient from 'openapi-fetch';
+import createClient from 'openapi-react-query';
 
-const client = createClient<paths>({
+export const client = createFetchClient<paths>({
     baseUrl: `${process.env.NEXT_PUBLIC_META_TEST_SERVER_HOST_URL}`,
 });
 
-const { data, response } = await client.GET('/users');
-
-console.log(data, 'data');
+export const $api = createClient(client);
